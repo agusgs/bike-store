@@ -81,4 +81,4 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['PRODUCTION_DATABASE'] %>
+  url: <%= ENV['DATABASE_URL'] %>
