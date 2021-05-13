@@ -22,13 +22,10 @@ jobs:
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.7.x
+          ruby-version: 2.7.3
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
       - name: Build and run test
         env:
           TEST_DATABASE: postgres://postgres:postgres@localhost:5432/bike_store_test
