@@ -38,4 +38,5 @@ jobs:
           bundle install --jobs 4 --retry 3
           rails db:create
           rails db:migrate
-          rails test
+          rails webpacker:compile
+          rails test:all
