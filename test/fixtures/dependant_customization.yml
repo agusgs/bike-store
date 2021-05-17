@@ -1,0 +1,47 @@
+background_color_red:
+  customization: background_color
+  child: red
+
+background_color_blue:
+  customization: background_color
+  child: blue
+
+pattern_color_green:
+  customization: pattern_color
+  child: green
+
+pattern_color_blue:
+  customization: pattern_color
+  child: blue
+
+with_pattern_background_color:
+  customization: with_pattern
+  child: background_color
+
+with_pattern_pattern_color:
+  customization: with_pattern
+  child: pattern_color
+
+wheel_17_blue:
+  customization: wheel_17
+  child: blue
+
+wheel_17_green:
+  customization: wheel_17
+  child: green
+
+wheel_17_with_pattern:
+  customization: wheel_17
+  child: with_pattern
+
+wheel_12_red:
+  customization: wheel_12
+  child: red
+
+metal_mudguard_red:
+  customization: metal_mudward
+  child: red
+
+metal_mudguard_green:
+  customization: metal_mudward
+  child: green

@@ -1,0 +1,15 @@
+wheels_wheel_17:
+  customizable_area: wheels
+  customization: wheels_17
+
+wheels_wheel_12:
+  customizable_area: wheels
+  customization: wheels_12
+
+mudguard_plastic_mudward:
+  customizable_area: mudward
+  customization: plastic_mudward
+
+mudguard_metal_mudward:
+  customizable_area: mudward
+  customization: metal_mudward

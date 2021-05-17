@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  product: one
+wheels:
+  name: "Wheels"
+  product: awesome_bike
 
-two:
-  name: MyString
-  product: two
+mudguards:
+  name: "Mudguards"
+  product: awesome_bike

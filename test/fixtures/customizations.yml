@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+--- !omap
+
+red:
+  name: "red"
+
+blue:
+  name: "blue"
+
+green:
+  name: "green"
+
+background_color:
+    name: "background color"
+
+pattern_color:
+    name: "pattern color"
+
+with_pattern:
+  name: "spotted pattern"
+  option_type: <%=Customization::CONTAINER%>
+
+wheel_12:
+  name: "12"
+
+wheel_17:
+  name: "18"
+
+plastic_mudward:
+  name: "plastic mudward"
+
+metal_mudguard:
+  name: "metal mudguard"

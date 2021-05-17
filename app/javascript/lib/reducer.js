@@ -2,7 +2,7 @@ import {getCustomizableAreas, getProducts} from "./api";
 import {
     apiGetError,
     apiGetPending,
-    apiGetSuccess,
+    apiGetSuccess, areaCustomized,
     customizableAreaSelected,
     initialState,
     productSelected
@@ -13,7 +13,7 @@ const API_GET_SUCCESS = 'api_get_success'
 const API_GET_ERROR = 'api_get_error'
 
 const PRODUCT_SELECTED = 'product_selected';
-const CUSTOMIZABLE_AREA_SELECTED = 'customizable_area_selected';
+const AREA_CUSTOMIZED = 'area_customized';
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
@@ -25,8 +25,8 @@ export function reducer(state = initialState, action) {
             return apiGetError(state, action.key)
         case PRODUCT_SELECTED:
             return productSelected(state, action.product)
-        case CUSTOMIZABLE_AREA_SELECTED:
-            return customizableAreaSelected(state, action.customizableArea)
+        case AREA_CUSTOMIZED:
+            return areaCustomized(state, action.customizableArea, action.selectedCustomizations)
         default: return state;
     }
 }
@@ -45,10 +45,9 @@ export const actions = {
     },
     selectProduct: function(dispatch, product) {
         dispatch({ type: PRODUCT_SELECTED, product})
-        this.apiGet(dispatch)('customizableAreas', () => getCustomizableAreas(product))
+        product && this.apiGet(dispatch)('customizableAreas', () => getCustomizableAreas(product))
     },
-    selectCustomizableArea: (dispatch) => async (customizableArea) => {
-        dispatch({ type: CUSTOMIZABLE_AREA_SELECTED, customizableArea})
-        //seguir de aca, ahora vendrian las customizaciones para el area
+    areaCustomized: (dispatch, customizableArea, selectedCustomizations)=> {
+        dispatch({ type: AREA_CUSTOMIZED, customizableArea: customizableArea, selectedCustomizations: selectedCustomizations})
     }
 }

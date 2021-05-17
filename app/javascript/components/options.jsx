@@ -9,15 +9,17 @@ export function Options(props) {
     const {name, loading, error, value, onSelection, selectedOption, children} = props
 
     function shouldShowSelector() {
-        return !((loading && !error) || (!loading && error))
+        return !!value && !((loading && !error) || (!loading && error))
     }
+
+    const onSelectionCallback = value ? onSelection : () => {}
 
     return (
         <OptionsCard name={name} withSelector={shouldShowSelector()}
-                     options={value} optionChange={onSelection}>
+                     options={value || []} optionChange={onSelectionCallback} selectedOption={selectedOption}>
             <If condition={loading} then={<Spinner/>} else={
                 <ErrorHandler error={error}>
-                    <If condition={!!selectedOption} then={children}/>
+                    {children}
                 </ErrorHandler>
             }/>
         </OptionsCard>
@@ -27,8 +29,8 @@ export function Options(props) {
 Options.propTypes = {
     error: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
-    value: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onSelection: PropTypes.func.isRequired,
+    value: PropTypes.arrayOf(PropTypes.object),
+    onSelection: PropTypes.func,
     selectedOption: PropTypes.object,
     children: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,

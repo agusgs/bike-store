@@ -3,33 +3,26 @@ import {useAppContext} from "./context";
 import If from "./if";
 import {Spinner} from "./spinner";
 import ErrorHandler from "./errorHandler";
-import React from "react";
+import React, {useState} from "react";
 import OptionsCard from "./optionsCard";
+import {Customization} from "./customizations";
 import {Options} from "./options";
 
-export function CustomizableAreasComponent(props) {
-    const {loading, error, value} = props
-    return (
-        <OptionsCard name={'Customize your product'} withSelector={false}>
-            <If condition={loading} then={<Spinner/>} else={
-                <ErrorHandler error={error}>
-                    {
-                        value.map((customizableArea) => (
-                            <Options key={customizableArea.id} name={customizableArea.name} error={false} loading={false} value={[]} onSelection={() => {}}>
-                                pendiente
-                            </Options>
-                        ))
-                    }
-                </ErrorHandler>
-            }/>
-        </OptionsCard>
-    )
-}
 
 export function CustomizableAreas() {
     const {customizableAreas, dispatch, actions} = customizableAreasState(useAppContext())
 
+    const onCustomizableAreaCustomized = (customizableArea) => (selectedCustomizations) => {
+        actions.areaCustomized(dispatch, customizableArea, selectedCustomizations)
+    }
+
     return (
-        <CustomizableAreasComponent {...customizableAreas}/>
+        <Options name={'Customize your product'} loading={customizableAreas.loading} error={customizableAreas.error}>
+            {
+                customizableAreas.value.map((customizableArea) => (
+                    <Customization key={customizableArea.token} {...customizableArea} option_type={'option'} onSelectedCustomization={onCustomizableAreaCustomized(customizableArea)}/>
+                ))
+            }
+        </Options>
     )
 }

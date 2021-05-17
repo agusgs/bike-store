@@ -13,7 +13,7 @@ export const initialState = {
     },
     order: {
         product: null,
-        customizableArea: null,
+        selectedCustomizations: [],
     }
 };
 
@@ -30,7 +30,7 @@ export function apiGetError(state, key) {
 }
 
 export function productSelected(state, product) {
-    return {...state, order: {product: product}};
+    return {...state, order: {product: product, selectedCustomizations:[]}};
 }
 
 export function productsState(context) {
@@ -38,11 +38,16 @@ export function productsState(context) {
     return { products: { ...state.api.products, selectedOption: state.order.product }, dispatch, actions }
 }
 
-export function customizableAreaSelected(state, customizableArea) {
-    return {...state, order: {product: state.order.product, customizableArea}};
-}
-
 export function customizableAreasState(context) {
     const { state, actions, dispatch} = context
     return {customizableAreas: {...state.api.customizableAreas}, dispatch, actions}
+}
+
+export function areaCustomized(state, customizableArea, selectedCustomizations) {
+    const customizations = [
+        ...(state.order.selectedCustomizations.filter((customizedArea) => customizedArea.token !== customizableArea.token)),
+        {...customizableArea, childCustomization: selectedCustomizations}
+    ]
+    console.log(customizations)
+    return {...state, order: {...state.order, selectedCustomizations: customizations}}
 }

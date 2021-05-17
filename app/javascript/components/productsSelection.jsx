@@ -10,6 +10,7 @@ export function ProductsSelection() {
     useEffect(() => {
         actions.getProducts(dispatch)
     }, [])
+
     useEffect(() => {
         if (products.value[0]) {
             actions.selectProduct(dispatch, products.value[0])

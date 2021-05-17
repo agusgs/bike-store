@@ -1,9 +1,5 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: 
-  available: false
-
-two:
-  name: 
-  available: false
+awesome_bike":
+  name: "Awesome Bike"
+  available: true
