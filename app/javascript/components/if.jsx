@@ -1,11 +1,11 @@
 import * as PropTypes from "prop-types";
 
-const If = (props) => (props.condition ? props.then : props.else)
+const If = (props) => (props.condition ? props.then : props.else || null)
 
 If.propTypes = {
-    condition: PropTypes.bool,
-    else: PropTypes.element,
-    then: PropTypes.element
+    condition: PropTypes.bool.isRequired,
+    else: PropTypes.node,
+    then: PropTypes.node.isRequired
 };
 
 export default If

@@ -9,7 +9,8 @@ const Error = () => (
             Error!
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-            There was an unexpected error in the application, please try again later. If the error persists contact me.
+            There was an unexpected error in the application, please try again later. If the error persists create an &nbsp;
+            <a href="https://github.com/agusgs/bike-store/issues" target="_blank">issue</a>.
         </Typography>
     </Container>
 )
