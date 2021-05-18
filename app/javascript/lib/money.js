@@ -5,6 +5,6 @@ export const euro = value => currency(value, {fromCents: true, symbol: '€', de
 export function priceInDisplayName(namesAndPrices) {
     return namesAndPrices.map(object => ({
         ...object,
-        displayName: object.name + (object.price ? ` ${euro(object.price).format()}` : '')
+        displayName: object.name + (object.price ? ` (${euro(object.price).format()})` : '')
     }))
 }

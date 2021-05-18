@@ -5,6 +5,7 @@ class CustomizationSerializerTest < ActiveSupport::TestCase
     assert_equal serialized[:id], customization.id
     assert serialized[:token].present?
     assert_equal serialized[:name], customization.name
+    assert_equal serialized[:price], customization.price_in_cents
     assert_equal serialized[:option_type], customization.option_type
     assert_equal serialized[:customizations].count, customization.children.count
     serialized[:customizations].each do |serialized_customization|

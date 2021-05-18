@@ -19,15 +19,20 @@ pattern_color:
 with_pattern:
   name: "spotted pattern"
   option_type: <%=Customization::CONTAINER%>
+  price_in_cents: 1700
 
 wheel_12:
   name: "12"
+  price_in_cents: 1200
 
 wheel_17:
   name: "18"
+  price_in_cents: 1800
 
 plastic_mudward:
   name: "plastic mudward"
+  price_in_cents: 900
 
 metal_mudguard:
   name: "metal mudguard"
+  price_in_cents: 2000

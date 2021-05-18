@@ -11,6 +11,7 @@ class CustomizationSerializer
         token: Random.uuid,
         name: customization.name,
         option_type: customization.option_type,
+        price: customization.price_in_cents,
         customizations: CustomizationSerializer.new(customization.children).serialize
       }
     end
