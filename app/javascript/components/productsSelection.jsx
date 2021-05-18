@@ -4,16 +4,16 @@ import React, {useEffect} from "react";
 import {CustomizableAreas} from "./customizableAreas";
 import {AsyncOptions} from "./asyncOptions";
 import {euro, priceInDisplayName} from "../lib/money";
-import {Typography} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 
-function Total() {
+function OrderButton() {
     const total = totalAmountState(useAppContext())
 
     return (
-        <Typography variant="h5" paragraph>
-            {`Total: ${euro(total).format()}`}
-        </Typography>
-    )
+        <Button size="large" variant="contained" color="primary">
+            {`ORDER FOR: ${euro(total).format()}`}
+        </Button>
+    );
 }
 
 export function ProductsSelection() {
@@ -36,7 +36,7 @@ export function ProductsSelection() {
                       error={products.error}
                       value={priceInDisplayName(products.value)}
                       selectedOption={products.selectedOption}
-                      footer={<Total/>}>
+                      footer={<OrderButton/>}>
             <CustomizableAreas/>
         </AsyncOptions>
     )

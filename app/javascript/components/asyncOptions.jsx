@@ -1,5 +1,5 @@
 import OptionsCard from "./optionsCard";
-import If from "./if";
+import IfThenElse from "./ifThenElse";
 import {Spinner} from "./spinner";
 import ErrorHandler from "./errorHandler";
 import * as PropTypes from "prop-types";
@@ -22,7 +22,7 @@ export function AsyncOptions(props) {
                      selectedOption={selectedOption}
                      footer={footer}
         >
-            <If condition={loading} then={<Spinner/>} else={
+            <IfThenElse condition={loading} then={<Spinner/>} else={
                 <ErrorHandler error={error}>
                     {children}
                 </ErrorHandler>

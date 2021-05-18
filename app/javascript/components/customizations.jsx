@@ -85,4 +85,3 @@ Customization.propTypes = {
     option_type: PropTypes.string.isRequired,
     onSelectedCustomization: PropTypes.func.isRequired
 }
-;

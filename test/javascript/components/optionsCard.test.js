@@ -1,5 +1,5 @@
 import React from 'react'
-import {findByText, getByText, render, screen} from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import OptionsCard from "../../../app/javascript/components/optionsCard";
 import '@testing-library/jest-dom/extend-expect'
 

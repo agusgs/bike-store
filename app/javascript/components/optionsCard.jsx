@@ -45,29 +45,29 @@ function OptionsCard(props) {
                 title={props.name}
             />
             <CardContent>
-                <If condition={props.withSelector} then={
-                    <>
-                        <InputLabel htmlFor="option"/>
-                        <Select
-                            native
-                            value={selectedOption.id || ''}
-                            onChange={handleOptionChange}
-                            inputProps={{
-                                role: "listbox",
-                                id: 'options',
-                            }}
-                        >
-                            <option role="option" key={-1} value={'none'}>None</option>
-                            {(props.options || []).map(option => (
-                                <option role="option" key={option.id} value={option.id}>{option.displayName}</option>))}
-                        </Select>
-                    </>
-                }/>
+                <If condition={props.withSelector}>
+                    <InputLabel htmlFor="option"/>
+                    <Select
+                        native
+                        value={selectedOption.id || ''}
+                        onChange={handleOptionChange}
+                        inputProps={{
+                            role: "listbox",
+                            id: 'options',
+                        }}
+                    >
+                        <option role="option" key={-1} value={'none'}>None</option>
+                        {(props.options || []).map(option => (
+                            <option role="option" key={option.id} value={option.id}>{option.displayName}</option>))}
+                    </Select>
+                </If>
                 {
                     (selectedOption.id || !props.withSelector) ? props.children || null : null
                 }
             </CardContent>
-            <If condition={!!props.footer} then={<CardActions>{props.footer}</CardActions>}/>
+            <If condition={!!props.footer} >
+                <CardActions>{props.footer}</CardActions>}
+            </If>
         </Card>
     );
 }

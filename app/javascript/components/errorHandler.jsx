@@ -1,6 +1,6 @@
 import {Container, Typography} from "@material-ui/core";
 import React from "react";
-import If from "./if";
+import IfThenElse from "./ifThenElse";
 import * as PropTypes from "prop-types";
 
 const Error = () => (
@@ -15,7 +15,7 @@ const Error = () => (
     </Container>
 )
 const ErrorHandler = (props) => (
-    <If condition={props.error} then={<Error/>} else={props.children}/>
+    <IfThenElse condition={props.error} then={<Error/>} else={props.children}/>
 )
 
 ErrorHandler.propTypes = {
