@@ -5,8 +5,8 @@ import ErrorHandler from "./errorHandler";
 import * as PropTypes from "prop-types";
 import React from "react";
 
-export function Options(props) {
-    const {name, loading, error, value, onSelection, selectedOption, children} = props
+export function AsyncOptions(props) {
+    const {name, loading, error, value, onSelection, selectedOption, children, footer} = props
 
     function shouldShowSelector() {
         return !!value && !((loading && !error) || (!loading && error))
@@ -15,8 +15,13 @@ export function Options(props) {
     const onSelectionCallback = value ? onSelection : () => {}
 
     return (
-        <OptionsCard name={name} withSelector={shouldShowSelector()}
-                     options={value || []} optionChange={onSelectionCallback} selectedOption={selectedOption}>
+        <OptionsCard name={name}
+                     withSelector={shouldShowSelector()}
+                     options={value || []}
+                     optionChange={onSelectionCallback}
+                     selectedOption={selectedOption}
+                     footer={footer}
+        >
             <If condition={loading} then={<Spinner/>} else={
                 <ErrorHandler error={error}>
                     {children}
@@ -26,7 +31,7 @@ export function Options(props) {
     );
 }
 
-Options.propTypes = {
+AsyncOptions.propTypes = {
     error: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
     value: PropTypes.arrayOf(PropTypes.object),
@@ -34,4 +39,5 @@ Options.propTypes = {
     selectedOption: PropTypes.object,
     children: PropTypes.node.isRequired,
     name: PropTypes.string.isRequired,
+    footer: PropTypes.node,
 };

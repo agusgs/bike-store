@@ -1,15 +1,15 @@
 import React from 'react'
 import {fireEvent, render, screen} from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'
-import {Options} from "../../../app/javascript/components/options";
+import {AsyncOptions} from "../../../app/javascript/components/asyncOptions";
 
 describe('when the product selection is loading', () => {
     test('renders the loading', () => {
         render(
-            <Options error={false} loading={true} onSelection={(_p) => {
+            <AsyncOptions error={false} loading={true} onSelection={(_p) => {
             }} value={[]} selectedOption={null} name={''}>
                 children
-            </Options>
+            </AsyncOptions>
         )
         expect(screen.getByRole('progressbar')).toBeInTheDocument()
     });
@@ -18,10 +18,10 @@ describe('when the product selection is loading', () => {
 describe('when there is an error', () => {
     test('renders the error', () => {
         render(
-            <Options error={true} loading={false} onSelection={(_p) => {
+            <AsyncOptions error={true} loading={false} onSelection={(_p) => {
             }} value={[]} selectedOption={null} name={''}>
                 children
-            </Options>
+            </AsyncOptions>
         )
         expect(screen.getByText('Error!')).toBeInTheDocument()
     });
@@ -35,10 +35,10 @@ describe('when it renders successfully', () => {
             test('render the children', () => {
                 const productSelection = jest.fn()
                 const {getByRole} = render(
-                    <Options error={false} loading={false} onSelection={productSelection}
-                             value={[element]} selectedOption={null} name={''}>
+                    <AsyncOptions error={false} loading={false} onSelection={productSelection}
+                                  value={[element]} selectedOption={null} name={''}>
                         {children}
-                    </Options>
+                    </AsyncOptions>
                 )
                 fireEvent.change(getByRole('listbox'), {target: {value: element.id}});
                 expect(productSelection).toHaveBeenCalledTimes(1)
@@ -47,11 +47,11 @@ describe('when it renders successfully', () => {
         describe('if there is not a selected product', () => {
             test('does not render the children', () => {
                 render(
-                    <Options error={false} loading={false} onSelection={(_p) => {
+                    <AsyncOptions error={false} loading={false} onSelection={(_p) => {
                     }}
-                             value={[element]} selectedOption={null} name={''}>
+                                  value={[element]} selectedOption={null} name={''}>
                         {children}
-                    </Options>
+                    </AsyncOptions>
                 )
                 expect(screen.queryByText(children)).not.toBeInTheDocument()
             });
@@ -59,20 +59,20 @@ describe('when it renders successfully', () => {
         describe('if there is a selected product', () => {
             test('render the children', () => {
                 render(
-                    <Options error={false} loading={false} onSelection={(_p) => {
+                    <AsyncOptions error={false} loading={false} onSelection={(_p) => {
                     }}
-                             value={[element]} selectedOption={element} name={''}>
+                                  value={[element]} selectedOption={element} name={''}>
                         {children}
-                    </Options>
+                    </AsyncOptions>
                 )
                 expect(screen.getByText(children)).toBeInTheDocument()
             });
         });
     })
     describe('when the value prop is not passed', () => {
-        const options = <Options error={false} loading={false} name={''}>
+        const options = <AsyncOptions error={false} loading={false} name={''}>
             {children}
-        </Options>;
+        </AsyncOptions>;
 
         test('does not render the selector', () => {
             render(options)

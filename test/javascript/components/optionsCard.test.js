@@ -1,5 +1,5 @@
 import React from 'react'
-import {render, screen} from "@testing-library/react";
+import {findByText, getByText, render, screen} from "@testing-library/react";
 import OptionsCard from "../../../app/javascript/components/optionsCard";
 import '@testing-library/jest-dom/extend-expect'
 
@@ -23,3 +23,10 @@ describe('when the withSelector prop is false', () => {
     });
 })
 
+describe('when the footer prop is passed', () => {
+    test('renders the footer', () => {
+        const footer = "footer"
+        render(<OptionsCard name={name} withSelector={false} options={[]} footer={footer}/>)
+        expect(screen.getByText(footer)).toBeInTheDocument()
+    })
+})

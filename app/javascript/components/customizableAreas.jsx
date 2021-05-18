@@ -2,7 +2,7 @@ import {customizableAreasState} from "../lib/state";
 import {useAppContext} from "./context";
 import React from "react";
 import {Customization} from "./customizations";
-import {Options} from "./options";
+import {AsyncOptions} from "./asyncOptions";
 
 
 export function CustomizableAreas() {
@@ -13,12 +13,18 @@ export function CustomizableAreas() {
     }
 
     return (
-        <Options name={'Customize your product'} loading={customizableAreas.loading} error={customizableAreas.error}>
+        <AsyncOptions name={'Customize your product'} loading={customizableAreas.loading} error={customizableAreas.error}>
             {
                 customizableAreas.value.map((customizableArea) => (
-                    <Customization key={customizableArea.token} {...customizableArea} option_type={'option'} onSelectedCustomization={onCustomizableAreaCustomized(customizableArea)}/>
+                    <Customization
+                        key={customizableArea.token}
+                        option_type={'option'}
+                        onSelectedCustomization={onCustomizableAreaCustomized(customizableArea)}
+                        price={0}
+                        {...customizableArea}
+                    />
                 ))
             }
-        </Options>
+        </AsyncOptions>
     )
 }

@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import {CardHeader, InputLabel, Select} from "@material-ui/core";
+import {CardActions, CardHeader, InputLabel, Select} from "@material-ui/core";
 import PropTypes from "prop-types";
 import If from "./if";
 
@@ -42,7 +41,7 @@ function OptionsCard(props) {
     return (
         <Card className={classes.root}>
             <CardHeader
-                className={classes.title }
+                className={classes.title}
                 title={props.name}
             />
             <CardContent>
@@ -68,6 +67,7 @@ function OptionsCard(props) {
                     (selectedOption.id || !props.withSelector) ? props.children || null : null
                 }
             </CardContent>
+            <If condition={!!props.footer} then={<CardActions>{props.footer}</CardActions>}/>
         </Card>
     );
 }
@@ -78,7 +78,8 @@ OptionsCard.propTypes = {
     options: PropTypes.array,
     optionChange: PropTypes.func,
     children: PropTypes.node,
-    selectedOption: PropTypes.object
+    selectedOption: PropTypes.object,
+    footer: PropTypes.node,
 }
 
 

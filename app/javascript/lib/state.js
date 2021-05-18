@@ -12,7 +12,7 @@ export const initialState = {
         }
     },
     order: {
-        product: null,
+        product: {price: 0},
         selectedCustomizations: [],
     }
 };
@@ -29,7 +29,9 @@ export function apiGetError(state, key) {
     return {...state, api: {...state.api, [key]: {loading: false, error: true, value: []}}};
 }
 
-export function productSelected(state, product) {
+// PRODUCT RELATED FUNCTIONS
+export function productSelected(state, selected_product) {
+    const product = selected_product ? selected_product : {price: 0}
     return {...state, order: {product: product, selectedCustomizations: []}};
 }
 
@@ -38,6 +40,7 @@ export function productsState(context) {
     return {products: {...state.api.products, selectedOption: state.order.product}, dispatch, actions}
 }
 
+// CUSTOMIZATIONS RELATED FUNCTIONS
 export function customizableAreasState(context) {
     const {state, actions, dispatch} = context
     return {customizableAreas: {...state.api.customizableAreas}, dispatch, actions}
@@ -48,8 +51,21 @@ export function areaCustomized(state, customizableArea, selectedCustomizations) 
         ...state, order: {
             ...state.order, selectedCustomizations: [
                 ...(state.order.selectedCustomizations.filter((customizedArea) => customizedArea.token !== customizableArea.token)),
-                {...customizableArea, childCustomization: selectedCustomizations}
+                {
+                    ...customizableArea,
+                    totalPrice: selectedCustomizations ? selectedCustomizations.totalPrice || 0 : 0,
+                    childCustomization: selectedCustomizations
+                }
             ]
         }
     }
+}
+
+// TOTAL PRICE RELATED FUNCTIONS
+export function totalAmountState(context) {
+    const {product, selectedCustomizations} = context.state.order;
+    console.log(selectedCustomizations)
+
+    return product.price + selectedCustomizations.reduce(
+        (subtotal, customizableArea) => subtotal + customizableArea.totalPrice || 0, 0);
 }

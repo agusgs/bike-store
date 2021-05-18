@@ -14,14 +14,17 @@ class CustomizationOptions extends React.Component {
 
     onChildrenSelectedCustomization(customization) {
         if (customization) {
-            this.props.onSelectedCustomization({...this.state.selectedCustomization, childCustomization: customization})
+            const totalPrice = this.state.selectedCustomization.price + (customization.totalPrice || 0);
+            this.props.onSelectedCustomization(
+                {...this.state.selectedCustomization, totalPrice: totalPrice, childCustomization: customization})
         } else {
-            this.props.onSelectedCustomization({...this.state.selectedCustomization})
+            this.props.onSelectedCustomization(
+                {...this.state.selectedCustomization, totalPrice: this.state.selectedCustomization.price})
         }
     }
 
     onSelectedCustomization(customization) {
-        this.props.onSelectedCustomization(customization)
+        this.props.onSelectedCustomization({...customization, totalPrice: customization ? customization.price : 0})
         this.setState({selectedCustomization: customization})
     }
 
@@ -41,7 +44,7 @@ class CustomizationOptions extends React.Component {
 }
 
 function CustomizationContainer(props) {
-    const [childrenCustomizations, setChildCustomization] = useState([]);
+    const [childrenCustomizations, setChildrenCustomizations] = useState([]);
 
     function onChildrenSelectedCustomization(customization, childCustomization) {
         const withoutCustomization = childrenCustomizations.filter((existentCustomization) => customization.token !== existentCustomization.token)
@@ -49,9 +52,10 @@ function CustomizationContainer(props) {
             ...customization,
             childCustomization: childCustomization
         }] : [...withoutCustomization]
+        const totalPrice = customizations.reduce(((acc, customization) => acc + customization.totalPrice), 0);
 
-        setChildCustomization(customizations)
-        props.onSelectedCustomization(customizations)
+        setChildrenCustomizations(customizations)
+        props.onSelectedCustomization({...props, totalPrice: totalPrice, childCustomization: customizations})
     }
 
     return (
@@ -77,6 +81,7 @@ Customization.propTypes = {
     token: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     customizations: PropTypes.array,
+    price: PropTypes.number.isRequired,
     option_type: PropTypes.string.isRequired,
     onSelectedCustomization: PropTypes.func.isRequired
 }
