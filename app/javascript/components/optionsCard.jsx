@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {InputLabel, Select} from "@material-ui/core";
+import {CardHeader, InputLabel, Select} from "@material-ui/core";
 import PropTypes from "prop-types";
 import If from "./if";
 
@@ -41,10 +41,11 @@ function OptionsCard(props) {
     }
     return (
         <Card className={classes.root}>
+            <CardHeader
+                className={classes.title }
+                title={props.name}
+            />
             <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {props.name}
-                </Typography>
                 <If condition={props.withSelector} then={
                     <>
                         <InputLabel htmlFor="option"/>
@@ -59,7 +60,7 @@ function OptionsCard(props) {
                         >
                             <option role="option" key={-1} value={'none'}>None</option>
                             {(props.options || []).map(option => (
-                                <option role="option" key={option.id} value={option.id}>{option.name}</option>))}
+                                <option role="option" key={option.id} value={option.id}>{option.displayName}</option>))}
                         </Select>
                     </>
                 }/>

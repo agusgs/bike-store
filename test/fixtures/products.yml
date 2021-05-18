@@ -3,3 +3,4 @@
 awesome_bike":
   name: "Awesome Bike"
   available: true
+  price_in_cents: 1000

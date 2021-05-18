@@ -1,6 +1,6 @@
 #PRODUCTS
-awesome_bike = Product.create!({ name: "Awesome Bike", available: true })
-mountain_bike = Product.create!({ name: "Mountain Bike", available: true })
+awesome_bike = Product.create!({ name: "Awesome Bike", available: true, price_in_cents: 12312 })
+mountain_bike = Product.create!({ name: "Mountain Bike", available: true, price_in_cents: 23435 })
 Product.create!({ name: "Old Bike", available: false })
 
 #CUSTOMIZATIONS

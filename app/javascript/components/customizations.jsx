@@ -1,6 +1,7 @@
 import OptionsCard from "./optionsCard";
 import React, {useState} from "react";
 import * as PropTypes from "prop-types";
+import {priceInDisplayName} from "../lib/money";
 
 class CustomizationOptions extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class CustomizationOptions extends React.Component {
         const {name, customizations} = this.props
         const shouldRenderCustomization = this.state.selectedCustomization && this.state.selectedCustomization.customizations.length > 0;
         return (
-            <OptionsCard name={name} withSelector={true} options={customizations}
+            <OptionsCard name={name} withSelector={true} options={priceInDisplayName(customizations)}
                          optionChange={(customization) => this.onSelectedCustomization(customization)}>
                 {shouldRenderCustomization ?
                     <Customization key={this.state.selectedCustomization.token} {...this.state.selectedCustomization}

@@ -3,7 +3,6 @@ import {
     apiGetError,
     apiGetPending,
     apiGetSuccess, areaCustomized,
-    customizableAreaSelected,
     initialState,
     productSelected
 } from "./state";

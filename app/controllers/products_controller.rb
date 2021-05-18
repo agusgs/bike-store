@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
   def index
-    render json: Product.available
+    render json: ::ProductSerializer.new(Product.available).serialize
   end
 end

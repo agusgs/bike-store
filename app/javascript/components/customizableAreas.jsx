@@ -1,10 +1,6 @@
 import {customizableAreasState} from "../lib/state";
 import {useAppContext} from "./context";
-import If from "./if";
-import {Spinner} from "./spinner";
-import ErrorHandler from "./errorHandler";
-import React, {useState} from "react";
-import OptionsCard from "./optionsCard";
+import React from "react";
 import {Customization} from "./customizations";
 import {Options} from "./options";
 
