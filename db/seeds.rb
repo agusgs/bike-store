@@ -4,22 +4,22 @@ mountain_bike = Product.create!({ name: "Mountain Bike", available: true, price_
 Product.create!({ name: "Old Bike", available: false })
 
 #CUSTOMIZATIONS
-red = Customization.create!(name: "red", option_type: Customization::OPTION)
-blue = Customization.create!(name: "blue", option_type: Customization::OPTION)
-green = Customization.create!(name: "green", option_type: Customization::OPTION)
+red = Customization.create!(name: "Color red", option_type: Customization::OPTION)
+blue = Customization.create!(name: "Color lue", option_type: Customization::OPTION)
+green = Customization.create!(name: "Color green", option_type: Customization::OPTION)
 
-background_color = Customization.create!(name: "background color", children: [green, red], option_type: Customization::OPTION)
-pattern_color = Customization.create!(name: "pattern coloor", children: [red], option_type: Customization::OPTION)
-with_pattern = Customization.create!(name: "spotted", children: [background_color, pattern_color], option_type: Customization::CONTAINER, price_in_cents: 1700)
+background_color = Customization.create!(name: "Background color", children: [green, red], option_type: Customization::OPTION)
+pattern_color = Customization.create!(name: "Pattern color", children: [red], option_type: Customization::OPTION)
+with_pattern = Customization.create!(name: "With spotted pattern", children: [background_color, pattern_color], option_type: Customization::CONTAINER, price_in_cents: 1700)
 
-wheel_size_12 = Customization.create!(name: "12", children: [red, blue], option_type: Customization::OPTION, price_in_cents: 1200)
-wheel_size_20 = Customization.create!(name: "20", children: [red, green, blue], option_type: Customization::OPTION, price_in_cents: 2000)
-wheel_size_17 = Customization.create!(name: "17", children: [green, with_pattern], option_type: Customization::OPTION, price_in_cents: 1800)
+wheel_size_12 = Customization.create!(name: "Size: 12", children: [red, blue], option_type: Customization::OPTION, price_in_cents: 1200)
+wheel_size_20 = Customization.create!(name: "Size: 20", children: [red, green, blue], option_type: Customization::OPTION, price_in_cents: 2000)
+wheel_size_17 = Customization.create!(name: "Size: 17", children: [green, with_pattern], option_type: Customization::OPTION, price_in_cents: 1800)
 
-plastic_mudguard = Customization.create!(name: "plastic", option_type: Customization::OPTION, price_in_cents: 900)
-metal_mudguard = Customization.create!(name: "metal", children: [red, green], option_type: Customization::OPTION, price_in_cents: 2100)
+plastic_mudguard = Customization.create!(name: "Plastic", option_type: Customization::OPTION, price_in_cents: 900)
+metal_mudguard = Customization.create!(name: "Metal", children: [red, green], option_type: Customization::OPTION, price_in_cents: 2100)
 
-with_suspension = Customization.create!(name: "with suspension", option_type: Customization::OPTION, price_in_cents: 3000)
+with_suspension = Customization.create!(name: "With Suspension", option_type: Customization::OPTION, price_in_cents: 3000)
 
 #CUSTOMIZABLE AREAS
 ab_wheels = CustomizableArea.create!(name: "Wheels", product: awesome_bike, customizations: [wheel_size_12, wheel_size_20])

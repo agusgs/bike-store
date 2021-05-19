@@ -7,13 +7,25 @@ import PropTypes from "prop-types";
 import If from "./if";
 
 const useStyles = makeStyles({
+    withMargin: {
+      marginLeft: 20
+    },
     root: {
         minWidth: 275,
-        margin: 20
+        margin: 20,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderStyle: 'solid',
     },
     title: {
         fontSize: 14,
+        marginLeft: 20
     },
+    actions: {
+        paddingTop:0,
+        paddingBottom:16,
+        marginLeft: 20
+    }
 });
 
 function OptionsCard(props) {
@@ -48,6 +60,7 @@ function OptionsCard(props) {
                 <If condition={props.withSelector}>
                     <InputLabel htmlFor="option"/>
                     <Select
+                        className={classes.withMargin}
                         native
                         value={selectedOption.id || ''}
                         onChange={handleOptionChange}
@@ -66,7 +79,7 @@ function OptionsCard(props) {
                 }
             </CardContent>
             <If condition={!!props.footer} >
-                <CardActions>{props.footer}</CardActions>}
+                <CardActions className={classes.actions}>{props.footer}</CardActions>
             </If>
         </Card>
     );

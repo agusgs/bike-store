@@ -9,16 +9,23 @@ export const initialState = {
             loading: true,
             error: false,
             value: []
+        },
+        checkout: {
+            loading: false,
+            error: false,
+            value: null
         }
     },
     order: {
         product: {price: 0},
         selectedCustomizations: [],
-    }
+    },
 };
 
+// API RELATED FUNCTIONS
+
 export function apiGetPending(state, key) {
-    return {...state, api: {...state.api, [key]: {loading: true, error: false, value: []}}}
+    return {...state, api: {...state.api, [key]: {loading: true, error: false, value: null}}}
 }
 
 export function apiGetSuccess(state, key, value) {
@@ -26,7 +33,7 @@ export function apiGetSuccess(state, key, value) {
 }
 
 export function apiGetError(state, key) {
-    return {...state, api: {...state.api, [key]: {loading: false, error: true, value: []}}};
+    return {...state, api: {...state.api, [key]: {loading: false, error: true, value: null}}};
 }
 
 // PRODUCT RELATED FUNCTIONS
@@ -47,16 +54,17 @@ export function customizableAreasState(context) {
 }
 
 export function areaCustomized(state, customizableArea, selectedCustomizations) {
+    const customizedCustomizableAreas = state.order.selectedCustomizations.filter((customizedArea) => customizedArea.token !== customizableArea.token);
     return {
         ...state, order: {
-            ...state.order, selectedCustomizations: [
-                ...(state.order.selectedCustomizations.filter((customizedArea) => customizedArea.token !== customizableArea.token)),
+            ...state.order,
+            selectedCustomizations: selectedCustomizations ? [
+                ...customizedCustomizableAreas,
                 {
                     ...customizableArea,
-                    totalPrice: selectedCustomizations ? selectedCustomizations.totalPrice || 0 : 0,
+                    totalPrice: selectedCustomizations.totalPrice || 0,
                     childCustomization: selectedCustomizations
-                }
-            ]
+                }] : [...customizedCustomizableAreas]
         }
     }
 }
@@ -64,8 +72,20 @@ export function areaCustomized(state, customizableArea, selectedCustomizations) 
 // TOTAL PRICE RELATED FUNCTIONS
 export function totalAmountState(context) {
     const {product, selectedCustomizations} = context.state.order;
-    console.log(selectedCustomizations)
 
     return product.price + selectedCustomizations.reduce(
         (subtotal, customizableArea) => subtotal + customizableArea.totalPrice || 0, 0);
+}
+
+// CHECKOUT RELATED FUNCTIONS
+
+export function checkoutState(context) {
+    return {
+        product: context.state.order.product,
+        customizations: context.state.order.selectedCustomizations,
+        total: totalAmountState(context),
+        dispatch: context.dispatch,
+        actions: context.actions,
+        checkout: context.state.api.checkout
+    }
 }

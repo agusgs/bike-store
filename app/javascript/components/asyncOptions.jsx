@@ -12,7 +12,19 @@ export function AsyncOptions(props) {
         return !!value && !((loading && !error) || (!loading && error))
     }
 
-    const onSelectionCallback = value ? onSelection : () => {}
+    const onSelectionCallback = value ? onSelection : () => {
+    }
+
+    function content() {
+        if (loading) {
+            return <Spinner/>
+        } else {
+            return (
+                <ErrorHandler error={error}>
+                    {children}
+                </ErrorHandler>)
+        }
+    }
 
     return (
         <OptionsCard name={name}
@@ -22,11 +34,7 @@ export function AsyncOptions(props) {
                      selectedOption={selectedOption}
                      footer={footer}
         >
-            <IfThenElse condition={loading} then={<Spinner/>} else={
-                <ErrorHandler error={error}>
-                    {children}
-                </ErrorHandler>
-            }/>
+            {content()}
         </OptionsCard>
     );
 }
@@ -37,7 +45,7 @@ AsyncOptions.propTypes = {
     value: PropTypes.arrayOf(PropTypes.object),
     onSelection: PropTypes.func,
     selectedOption: PropTypes.object,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     name: PropTypes.string.isRequired,
     footer: PropTypes.node,
 };

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get 'checkout', to: 'home#index'
   get 'orders/index'
   get 'products/index'
   get 'customizable_areas/index'

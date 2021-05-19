@@ -1,7 +1,7 @@
-import {Container, Typography} from "@material-ui/core";
+import {Container, Link, Typography} from "@material-ui/core";
 import React from "react";
-import IfThenElse from "./ifThenElse";
 import * as PropTypes from "prop-types";
+import {Link as RouterLink} from "react-router-dom";
 
 const Error = () => (
     <Container component="main" maxWidth="xs">
@@ -12,15 +12,20 @@ const Error = () => (
             There was an unexpected error in the application, please try again later. If the error persists create an &nbsp;
             <a href="https://github.com/agusgs/bike-store/issues" target="_blank">issue</a>.
         </Typography>
+        <RouterLink to={"/"}>
+            <Link component={"div"} onClick={()=>{}}>
+                Try Again
+            </Link>
+        </RouterLink>
     </Container>
 )
-const ErrorHandler = (props) => (
-    <IfThenElse condition={props.error} then={<Error/>} else={props.children}/>
-)
+const ErrorHandler = (props) => {
+    return props.error ? <Error/> : props.children
+}
 
 ErrorHandler.propTypes = {
-    error: PropTypes.bool,
-    children: PropTypes.node
+    error: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 export default ErrorHandler;

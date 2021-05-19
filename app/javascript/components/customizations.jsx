@@ -24,7 +24,7 @@ class CustomizationOptions extends React.Component {
     }
 
     onSelectedCustomization(customization) {
-        this.props.onSelectedCustomization({...customization, totalPrice: customization ? customization.price : 0})
+        this.props.onSelectedCustomization(customization ? {...customization, totalPrice: customization ? customization.price : 0} : null)
         this.setState({selectedCustomization: customization})
     }
 
@@ -55,7 +55,7 @@ function CustomizationContainer(props) {
         const totalPrice = customizations.reduce(((acc, customization) => acc + customization.totalPrice), 0);
 
         setChildrenCustomizations(customizations)
-        props.onSelectedCustomization({...props, totalPrice: totalPrice, childCustomization: customizations})
+        props.onSelectedCustomization(customizations)
     }
 
     return (

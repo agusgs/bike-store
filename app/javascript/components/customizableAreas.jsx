@@ -15,7 +15,7 @@ export function CustomizableAreas() {
     return (
         <AsyncOptions name={'Customize your product'} loading={customizableAreas.loading} error={customizableAreas.error}>
             {
-                customizableAreas.value.map((customizableArea) => (
+                customizableAreas.value ? customizableAreas.value.map((customizableArea) => (
                     <Customization
                         key={customizableArea.token}
                         option_type={'option'}
@@ -23,7 +23,7 @@ export function CustomizableAreas() {
                         price={0}
                         {...customizableArea}
                     />
-                ))
+                )) : null
             }
         </AsyncOptions>
     )
