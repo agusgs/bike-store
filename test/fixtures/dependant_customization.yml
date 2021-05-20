@@ -39,9 +39,9 @@ wheel_12_red:
   child: red
 
 metal_mudguard_red:
-  customization: metal_mudward
+  customization: metal_mudguard
   child: red
 
 metal_mudguard_green:
-  customization: metal_mudward
+  customization: metal_mudguard
   child: green

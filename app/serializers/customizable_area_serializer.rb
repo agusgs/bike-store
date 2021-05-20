@@ -1,6 +1,6 @@
 class CustomizableAreaSerializer
   def initialize(customizable_areas)
-    @customizable_areas = customizable_areas.preload(customizations: :children)
+    @customizable_areas = customizable_areas.eager_load(available_customizations: :customization)
   end
 
   attr_reader :customizable_areas

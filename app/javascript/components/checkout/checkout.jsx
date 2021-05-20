@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
@@ -47,23 +47,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const steps = ['Review your order', 'Personal data'];
-
-function ThankYouStep() {
-    return <>
-        <Typography variant="h5" gutterBottom>
-            Thanks for choosing us.
-        </Typography>
-        <Typography variant="subtitle1">
-            We registered your order. We'll contact you in the next couple of hours to explain to you how get your product :)
-        </Typography>
-    </>;
-}
 
 export default function Checkout() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const {product} = checkoutState(useAppContext())
+    const steps = ['Review your order', 'Personal data'];
+    const {dispatch, actions} = checkoutState(useAppContext())
+
+    useEffect(() => {
+        return () => {
+            actions.clearCheckout(dispatch)
+        }
+    }, [])
 
     function getStepContent(step) {
         switch (step) {
@@ -72,7 +68,7 @@ export default function Checkout() {
             case 1:
                 return <PersonalData classes={classes} onBack={handleBack} onNext={handleNext}/>;
             default:
-                return <ThankYouStep/>
+                return null
         }
     }
 
@@ -99,7 +95,7 @@ export default function Checkout() {
                                 </Step>
                             ))}
                         </Stepper>
-                        {getStepContent(activeStep, classes, handleNext)}
+                        {getStepContent(activeStep)}
                     </Paper>
                 </main>
             </>

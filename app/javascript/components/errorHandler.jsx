@@ -12,11 +12,9 @@ const Error = () => (
             There was an unexpected error in the application, please try again later. If the error persists create an &nbsp;
             <a href="https://github.com/agusgs/bike-store/issues" target="_blank">issue</a>.
         </Typography>
-        <RouterLink to={"/"}>
-            <Link component={"div"} onClick={()=>{}}>
-                Try Again
-            </Link>
-        </RouterLink>
+        <Link href={'/'} onClick={()=>{}}>
+            Try Again
+        </Link>
     </Container>
 )
 const ErrorHandler = (props) => {

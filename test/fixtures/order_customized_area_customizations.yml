@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_customized_area: one
+  order_customization: one
+
+two:
+  order_customized_area: two
+  order_customization: two

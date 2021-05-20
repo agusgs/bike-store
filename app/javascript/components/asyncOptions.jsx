@@ -1,5 +1,4 @@
 import OptionsCard from "./optionsCard";
-import IfThenElse from "./ifThenElse";
 import {Spinner} from "./spinner";
 import ErrorHandler from "./errorHandler";
 import * as PropTypes from "prop-types";
@@ -12,31 +11,21 @@ export function AsyncOptions(props) {
         return !!value && !((loading && !error) || (!loading && error))
     }
 
-    const onSelectionCallback = value ? onSelection : () => {
-    }
-
-    function content() {
-        if (loading) {
-            return <Spinner/>
-        } else {
-            return (
-                <ErrorHandler error={error}>
-                    {children}
-                </ErrorHandler>)
-        }
-    }
+    const onSelectionCallback = value ? onSelection : () => {}
 
     return (
-        <OptionsCard name={name}
-                     withSelector={shouldShowSelector()}
-                     options={value || []}
-                     optionChange={onSelectionCallback}
-                     selectedOption={selectedOption}
-                     footer={footer}
-        >
-            {content()}
-        </OptionsCard>
-    );
+        <ErrorHandler error={error}>
+            <OptionsCard name={name}
+                         withSelector={shouldShowSelector()}
+                         options={value || []}
+                         optionChange={onSelectionCallback}
+                         selectedOption={selectedOption}
+                         footer={footer}
+            >
+                {loading ? <Spinner/> : children}
+            </OptionsCard>
+        </ErrorHandler>
+    )
 }
 
 AsyncOptions.propTypes = {

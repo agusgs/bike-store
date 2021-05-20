@@ -1,5 +1,13 @@
 import {getCustomizableAreas, getProducts, postOrder} from "./api";
-import {apiGetError, apiGetPending, apiGetSuccess, areaCustomized, initialState, productSelected} from "./state";
+import {
+    apiGetError,
+    apiGetPending,
+    apiGetSuccess,
+    areaCustomized,
+    initialState,
+    productSelected,
+    resetCheckout, resetOrder
+} from "./state";
 
 const API_CALL_PENDING = 'api_call_pending'
 const API_CALL_SUCCESS = 'api_call_success'
@@ -7,6 +15,9 @@ const API_CALL_ERROR = 'api_call_error'
 
 const PRODUCT_SELECTED = 'product_selected';
 const AREA_CUSTOMIZED = 'area_customized';
+
+const RESET_CHECKOUT = 'reset_checkout';
+const RESET_ORDER = 'reset_order';
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
@@ -20,7 +31,12 @@ export function reducer(state = initialState, action) {
             return productSelected(state, action.product)
         case AREA_CUSTOMIZED:
             return areaCustomized(state, action.customizableArea, action.selectedCustomizations)
+        case RESET_CHECKOUT:
+            return resetCheckout(state)
+        case RESET_ORDER:
+            return resetOrder(state)
         default: return state;
+
     }
 }
 
@@ -29,12 +45,17 @@ export const actions = {
         dispatch({type: API_CALL_PENDING, key: key});
         try {
             dispatch({type: API_CALL_SUCCESS, key: key, value: await callFunction()})
+            return true
         } catch (error) {
             dispatch({type: API_CALL_ERROR, key: key})
+            return false
         }
     },
     getProducts: function(dispatch) {
-        this.apiCall(dispatch)('products', getProducts)
+        const result = this.apiCall(dispatch)('products', getProducts)
+        if (!result){
+            dispatch({type: RESET_ORDER })
+        }
     },
     selectProduct: function(dispatch, product) {
         dispatch({ type: PRODUCT_SELECTED, product})
@@ -45,5 +66,9 @@ export const actions = {
     },
     checkout: function(dispatch, product, customizations, personalData) {
         this.apiCall(dispatch)('checkout', () => postOrder(product, customizations, personalData))
-    }
+    },
+    clearCheckout: function(dispatch) {
+        dispatch({ type: RESET_CHECKOUT })
+        dispatch({ type: RESET_ORDER })
+    },
 }

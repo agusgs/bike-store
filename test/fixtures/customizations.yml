@@ -29,8 +29,8 @@ wheel_17:
   name: "18"
   price_in_cents: 1800
 
-plastic_mudward:
-  name: "plastic mudward"
+plastic_mudguard:
+  name: "plastic mudguard"
   price_in_cents: 900
 
 metal_mudguard:

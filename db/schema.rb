@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_145339) do
+ActiveRecord::Schema.define(version: 2021_05_20_135623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,45 @@ ActiveRecord::Schema.define(version: 2021_05_18_145339) do
     t.index ["customization_id"], name: "index_dependant_customizations_on_customization_id"
   end
 
+  create_table "order_customizations", force: :cascade do |t|
+    t.bigint "customization_id", null: false
+    t.bigint "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customization_id"], name: "index_order_customizations_on_customization_id"
+    t.index ["parent_id"], name: "index_order_customizations_on_parent_id"
+  end
+
+  create_table "order_customized_area_customizations", force: :cascade do |t|
+    t.bigint "order_customized_area_id", null: false
+    t.bigint "order_customization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_customization_id"], name: "idx_order_customized_area_customizations_on_oc_id"
+    t.index ["order_customized_area_id", "order_customization_id"], name: "idx_order_customized_area_customizations_on_oc_id_and_oca_id", unique: true
+    t.index ["order_customized_area_id"], name: "idx_order_customized_area_customizations_on_oca_id"
+  end
+
+  create_table "order_customized_areas", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "customizable_area_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customizable_area_id"], name: "index_order_customized_areas_on_customizable_area_id"
+    t.index ["order_id"], name: "index_order_customized_areas_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.string "client_name", null: false
+    t.string "client_lastname", null: false
+    t.string "client_email", null: false
+    t.string "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_orders_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.boolean "available"
@@ -64,4 +103,11 @@ ActiveRecord::Schema.define(version: 2021_05_18_145339) do
   add_foreign_key "customizable_areas", "products"
   add_foreign_key "dependant_customizations", "customizations"
   add_foreign_key "dependant_customizations", "customizations", column: "child_id"
+  add_foreign_key "order_customizations", "customizations"
+  add_foreign_key "order_customizations", "order_customizations", column: "parent_id"
+  add_foreign_key "order_customized_area_customizations", "order_customizations"
+  add_foreign_key "order_customized_area_customizations", "order_customized_areas"
+  add_foreign_key "order_customized_areas", "customizable_areas"
+  add_foreign_key "order_customized_areas", "orders"
+  add_foreign_key "orders", "products"
 end

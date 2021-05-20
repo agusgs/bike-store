@@ -1,19 +1,23 @@
-import {productsState, totalAmountState} from "../lib/state";
+import {customizableAreasState, productsState, totalAmountState} from "../lib/state";
 import {useAppContext} from "./context";
 import React, {useEffect} from "react";
 import {CustomizableAreas} from "./customizableAreas";
 import {AsyncOptions} from "./asyncOptions";
 import {euro, priceInDisplayName} from "../lib/money";
-import {Button} from "@material-ui/core";
+import {Button, CircularProgress} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 function OrderButton() {
-    const total = totalAmountState(useAppContext())
+    const context = useAppContext();
+    const {products} = productsState(context)
+    const {customizableAreas} = customizableAreasState(context)
+    const canCheckout = !products.error && !products.loading && products.selectedOption && !customizableAreas.error && !customizableAreas.loading;
+    const total = canCheckout ? `ORDER FOR: ${euro(totalAmountState(context)).format()}` : <CircularProgress/>
 
     return (
-        <Link to={'/checkout'}>
-            <Button size="large" variant="contained" color="primary">
-                {`ORDER FOR: ${euro(total).format()}`}
+        <Link to={canCheckout ? '/checkout' : ''}>
+            <Button disabled={!canCheckout} size="large" variant="contained" color="primary">
+                {total}
             </Button>
         </Link>
     )
@@ -39,7 +43,7 @@ export function ProductsSelection() {
                       error={products.error}
                       value={products.value ? priceInDisplayName(products.value) : []}
                       selectedOption={products.selectedOption}
-                      footer={<OrderButton/>}>
+                      footer={<OrderButton />}>
             <CustomizableAreas/>
         </AsyncOptions>
     )

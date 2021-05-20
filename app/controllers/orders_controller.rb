@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
-  def index
+  def create
+    order = OrderCreator.new(params).execute
+    render json: { number: order.id }
   end
 end

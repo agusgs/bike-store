@@ -2,6 +2,7 @@ import React from 'react'
 import {fireEvent, render, screen} from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'
 import {AsyncOptions} from "../../../app/javascript/components/asyncOptions";
+import {BrowserRouter} from "react-router-dom";
 
 describe('when the product selection is loading', () => {
     test('renders the loading', () => {
@@ -18,10 +19,12 @@ describe('when the product selection is loading', () => {
 describe('when there is an error', () => {
     test('renders the error', () => {
         render(
-            <AsyncOptions error={true} loading={false} onSelection={(_p) => {
-            }} value={[]} selectedOption={null} name={''}>
-                children
-            </AsyncOptions>
+            <BrowserRouter>
+                <AsyncOptions error={true} loading={false} onSelection={(_p) => {
+                }} value={[]} selectedOption={null} name={''}>
+                    children
+                </AsyncOptions>
+            </BrowserRouter>
         )
         expect(screen.getByText('Error!')).toBeInTheDocument()
     });

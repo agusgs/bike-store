@@ -1,6 +1,9 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-awesome_bike":
+awesome_bike:
   name: "Awesome Bike"
+  available: true
+  price_in_cents: 1000
+
+mountain_bike:
+  name: "Mountain Bike"
   available: true
   price_in_cents: 1000

@@ -1,7 +1,7 @@
 class Customization < ApplicationRecord
-  OPTION = 'option'
-  CONTAINER = 'container'
-  TYPES = [OPTION, CONTAINER]
+  OPTION = 'option'.freeze
+  CONTAINER = 'container'.freeze
+  TYPES = [OPTION, CONTAINER].freeze
 
   has_many :dependant_customizations
   has_many :children, through: :dependant_customizations

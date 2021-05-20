@@ -7,6 +7,7 @@ import {useAppContext} from "../context";
 import {checkoutState} from "../../lib/state";
 import {CircularProgress} from "@material-ui/core";
 import ErrorHandler from "../errorHandler";
+import {Link} from "react-router-dom";
 
 export default function PersonalData(props) {
     const {checkout, product, customizations, dispatch, actions} = checkoutState(useAppContext())
@@ -60,15 +61,30 @@ export default function PersonalData(props) {
     function completeCheckout() {
         if (canCheckout()) {
             actions.checkout(dispatch, product, customizations, {
-                firstName: firstName,
-                lastName: lastName,
-                email: email
+                client_name: firstName,
+                client_lastname: lastName,
+                client_email: email
             })
         }
     }
 
     if (checkout.value) {
-        props.onNext()
+        return <>
+            <Typography variant="h5" gutterBottom>
+                Thanks for choosing us.
+            </Typography>
+            <Typography variant="subtitle1">
+                {`We registered your order with the number #${checkout.value.number}. We'll contact you in the next couple
+                 of hours to explain to you how get your product :)`}
+            </Typography>
+            <div className={props.classes.buttons}>
+                <Link to="/">
+                    <Button onClick={() => actions.clearCheckout(dispatch)} className={props.classes.button}>
+                        Back
+                    </Button>
+                </Link>
+            </div>
+        </>;
     }
     return (
         <ErrorHandler error={checkout.error}>
@@ -135,7 +151,7 @@ export default function PersonalData(props) {
                     onClick={completeCheckout}
                     className={props.classes.button}
                 >
-                    {checkout.loading ? <CircularProgress color="secondary" /> : "Next"}
+                    {checkout.loading ? <CircularProgress color="secondary"/> : "Next"}
                 </Button>
             </div>
         </ErrorHandler>

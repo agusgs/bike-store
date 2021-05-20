@@ -7,16 +7,19 @@ export function getCustomizableAreas(product) {
 }
 
 export function postOrder(product, customizations, personalData) {
+    const token = document.querySelector('[name=csrf-token]').content
+
     const order = {
-        clientData: personalData,
-        productId: product.id,
+        client_data: personalData,
+        product_id: product.id,
         selected_customizations: customizations.map((customization) => mapCustomization(customization))
     }
 
-    return fetch("/order/create", {
+    return fetch("/orders/create", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': token
         },
         body: JSON.stringify(order) // body data type must match "Content-Type" header
     }).then(response => response.json());
@@ -28,7 +31,7 @@ function mapCustomization(customization) {
     if (Array.isArray(customization.childCustomization)) {
         mappedCustomization.selected_customizations = customization.childCustomization.map((childCustomization) => mapCustomization(childCustomization))
     } else if (customization.childCustomization) {
-        mappedCustomization.selected_customization = mapCustomization(customization.childCustomization)
+        mappedCustomization.selected_customizations = [mapCustomization(customization.childCustomization)]
     }
     return mappedCustomization
 }

@@ -1,7 +1,8 @@
 class CustomizationSerializer
   def initialize(customizations)
-    @customizations = customizations.preload(:children)
+    @customizations = customizations.eager_load(dependant_customizations: :child)
   end
+
   attr_reader :customizations, :prefix
 
   def serialize

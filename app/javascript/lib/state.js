@@ -47,6 +47,16 @@ export function productsState(context) {
     return {products: {...state.api.products, selectedOption: state.order.product}, dispatch, actions}
 }
 
+export function resetOrder(state) {
+    return {
+        ...state,
+        order: {
+            product: {price: 0},
+            selectedCustomizations: [],
+        }
+    }
+}
+
 // CUSTOMIZATIONS RELATED FUNCTIONS
 export function customizableAreasState(context) {
     const {state, actions, dispatch} = context
@@ -87,5 +97,19 @@ export function checkoutState(context) {
         dispatch: context.dispatch,
         actions: context.actions,
         checkout: context.state.api.checkout
+    }
+}
+
+export function resetCheckout(state) {
+    return {
+        ...state,
+        api: {
+            ...state.api,
+            checkout: {
+                loading: false,
+                error: false,
+                value: null
+            }
+        }
     }
 }

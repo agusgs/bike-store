@@ -1,0 +1,14 @@
+class Order < ApplicationRecord
+  PLACED = "PLACED".freeze
+
+  belongs_to :product
+  has_many :order_customized_areas
+
+  validates_presence_of :client_name
+  validates_presence_of :client_lastname
+  validates_presence_of :client_email
+  validates_presence_of :product
+  validates_inclusion_of :status, in: [PLACED]
+
+  validates :client_email, format: { with: URI::MailTo::EMAIL_REGEXP }
+end
