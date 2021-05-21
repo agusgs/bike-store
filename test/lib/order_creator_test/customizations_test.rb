@@ -1,6 +1,6 @@
 require "test_helper"
 
-class InitializeCustomizationsTest < ActiveSupport::TestCase
+class CustomizationsTest < ActiveSupport::TestCase
   class WithANoneExistentCustomizationInTheFirstLevel < ActiveSupport::TestCase
     setup do
       product = products(:awesome_bike)

@@ -8,7 +8,7 @@ class OrderCreator
 
   def execute
     ActiveRecord::Base.transaction do
-      product = Product.find(order_request[:product_id])
+      product = Product.find_by!(id: order_request[:product_id], available: true)
       order = Order.new(
         product: product,
         client_name: order_request[:client_data][:client_name],
@@ -42,12 +42,16 @@ class OrderCreator
   end
 
   def customized_areas(selected_customizations, product, order)
-    selected_customizations.map do |selected_customization|
-      customizable_area = product.customizable_areas.find(selected_customization[:id])
-      order_customized_area = OrderCustomizedArea.new(customizable_area: customizable_area, order: order)
-      order_customized_area.order_customizations = sub_customizations(nil, selected_customization) { |id| customizable_area.customizations.find(id) }
-      order_customized_area.save!
-      order_customized_area
+    if selected_customizations
+      selected_customizations.map do |selected_customization|
+        customizable_area = product.customizable_areas.find(selected_customization[:id])
+        order_customized_area = OrderCustomizedArea.new(customizable_area: customizable_area, order: order)
+        order_customized_area.order_customizations = sub_customizations(nil, selected_customization) { |id| customizable_area.customizations.find(id) }
+        order_customized_area.save!
+        order_customized_area
+      end
+    else
+      []
     end
   end
 end

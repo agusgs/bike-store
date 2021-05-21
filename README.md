@@ -1,5 +1,7 @@
 # The Bike Store
 Visit the deployed website [here](https://bike-store-agusgs.herokuapp.com/) 
+
+### Development Setup
 ##### Prerequisites
 
 The setups steps expect following tools installed on the system.
@@ -62,7 +64,7 @@ To run the frontend tests:
 yarn test
 ```
 
-You can also run the tests with the "watch" flag
+You can also run jest tests in watch mode 
 ```bash
 yarn test-watch
 ```

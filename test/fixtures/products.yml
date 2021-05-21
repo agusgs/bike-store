@@ -3,6 +3,11 @@ awesome_bike:
   available: true
   price_in_cents: 1000
 
+old_bike:
+  name: "Old Bike"
+  available: false
+  price_in_cents: 1000
+
 mountain_bike:
   name: "Mountain Bike"
   available: true

@@ -1,13 +1,13 @@
 require "test_helper"
 
-class InitializeCustomizableAreaTest < ActiveSupport::TestCase
+class CustomizableAreaTest < ActiveSupport::TestCase
   class WithANoneExistentCustomizableArea < ActiveSupport::TestCase
     setup do
       @request = {
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
-        product_id: Product.last.id,
+        product_id: products(:awesome_bike).id,
         selected_customizations: [
           {
             id: CustomizableArea.last.id + 1,
@@ -31,10 +31,10 @@ class InitializeCustomizableAreaTest < ActiveSupport::TestCase
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
-        product_id: Product.last.id,
+        product_id: products(:awesome_bike).id,
         selected_customizations: [
           {
-            id: Product.first.customizable_areas.first.id,
+            id: products(:mountain_bike).customizable_areas.first.id,
             selected_customizations: {}
           }
         ]

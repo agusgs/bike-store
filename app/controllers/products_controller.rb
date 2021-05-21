@@ -1,5 +1,10 @@
 class ProductsController < ApplicationController
   def index
-    render json: ::ProductSerializer.new(Product.available).serialize
+    available = params.permit(:available)[:available]
+
+    products = Product.all
+    products = available.present? ? products.where(available: available) : products
+
+    render json: ::ProductSerializer.new(products).serialize
   end
 end
