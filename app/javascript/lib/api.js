@@ -1,5 +1,5 @@
 export function getProducts() {
-    return fetch("/products/index?available=true").then(response => response.json())
+    return fetch("/products?available=true").then(response => response.json())
 }
 
 export function getCustomizableAreas(product) {
