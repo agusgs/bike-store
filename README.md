@@ -1,21 +1,69 @@
-# Bike Store
+# The Bike Store
+Visit the deployed website [here](https://bike-store-agusgs.herokuapp.com/) 
+##### Prerequisites
 
-Things you may want to cover:
+The setups steps expect following tools installed on the system.
 
-* Ruby version
+- git
+- Ruby 2.7.3
+- bundler 2.2.17
+- Node 14.17.0
+- yarn 1.22.10
+- PostgreSQL
 
-* System dependencies
+Optionally you can use docker and docker-compose to run the database server, check docker-compose.yml
 
-* Configuration
+##### 1. Check out the repository
 
-* Database creation
+```bash
+git clone git@github.com:agusgs/bike-store.git
+```
 
-* Database initialization
+##### 2. Install dependencies
 
-* How to run the test suite
+```bash
+bundle install
+yarn install
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+##### 3. Environment variables
 
-* Deployment instructions
+You have an example of the required environment variables in .env-samples
 
-* ...
+##### 4. Create and setup the database
+
+Run the following commands to create and setup the database.
+
+```bash
+bundle exec rails db:create
+bundle exec rails db:setup
+```
+
+##### 5. Start the Rails server
+
+You can start the rails server using the command given below.
+
+```bash
+bundle exec rails s
+```
+
+And now you can visit the site with the URL http://localhost:3000
+
+##### 6. Run tests
+
+We have tests both on backend and frontend.
+To run the backend tests:
+```bash
+bundle exec rails test
+```
+
+To run the frontend tests:
+```bash
+yarn test
+```
+
+You can also run the tests with the "watch" flag
+```bash
+yarn test-watch
+```
+
