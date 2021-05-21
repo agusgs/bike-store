@@ -3,7 +3,7 @@ export function getProducts() {
 }
 
 export function getCustomizableAreas(product) {
-    return fetch(`/customizable_areas/index?product_id=${product.id}`).then(response => response.json())
+    return fetch(`/customizable_areas?product_id=${product.id}`).then(response => response.json())
 }
 
 export function postOrder(product, customizations, personalData) {

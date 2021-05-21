@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     render json: { error: e.message }, status: :bad_request
   end
 
+  rescue_from ActiveRecord::RecordInvalid do |e|
+    render json: { error: e.message }, status: :bad_request
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |e|
     render json: { error: e.message }, status: :not_found
   end

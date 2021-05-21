@@ -6,6 +6,8 @@ class Customization < ApplicationRecord
   has_many :dependant_customizations
   has_many :children, through: :dependant_customizations
 
-  validates :option_type, presence: true
+  validates_presence_of :name
+  validates_presence_of :option_type
   validates :option_type, inclusion: TYPES
+
 end
