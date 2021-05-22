@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_20_135623) do
+ActiveRecord::Schema.define(version: 2021_05_21_222821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2021_05_20_135623) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "option_type", default: "option", null: false
     t.integer "price_in_cents", default: 0, null: false
+    t.bigint "parent_id"
+    t.index ["parent_id"], name: "index_customizations_on_parent_id"
   end
 
   create_table "dependant_customizations", force: :cascade do |t|
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 2021_05_20_135623) do
   add_foreign_key "available_customizations", "customizable_areas"
   add_foreign_key "available_customizations", "customizations"
   add_foreign_key "customizable_areas", "products"
+  add_foreign_key "customizations", "customizations", column: "parent_id"
   add_foreign_key "dependant_customizations", "customizations"
   add_foreign_key "dependant_customizations", "customizations", column: "child_id"
   add_foreign_key "order_customizations", "customizations"
