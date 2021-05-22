@@ -25,7 +25,42 @@ class CustomizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal before_post_customizations_count, Customization.count
   end
 
+  test 'can not create a customization with an non existent parent' do
+    before_post_customizations_count = Customization.count
+    post '/customizations', params: { name: "thingy", type: "other thingy", parent_id: Customization.order(:id).last.id + 1 }, as: :json
+
+    assert_response :bad_request
+    assert_equal before_post_customizations_count, Customization.count
+  end
+
   test 'creates a customization with price' do
+    name = "thingy"
+    type = Customization::OPTION
+    price = 10
+
+    post '/customizations', params: { name: name, type: type, price: price, parent_id: Customization.first.id }, as: :json
+
+    customization = Customization.find(response.parsed_body["id"])
+    assert_response :success
+    assert_equal name, customization.name
+    assert_equal type, customization.option_type
+    assert_equal price, customization.price_in_cents
+  end
+
+  test 'creates a customization without price' do
+    name = "thingy"
+    type = Customization::OPTION
+
+    post '/customizations', params: { name: name, type: type, parent_id: Customization.first.id }, as: :json
+
+    customization = Customization.find(response.parsed_body["id"])
+    assert_response :success
+    assert_equal name, customization.name
+    assert_equal type, customization.option_type
+    assert_equal 0, customization.price_in_cents
+  end
+
+  test 'creates a customization without parent' do
     name = "thingy"
     type = Customization::OPTION
     price = 10
@@ -39,16 +74,20 @@ class CustomizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal price, customization.price_in_cents
   end
 
-  test 'creates a customization without price' do
+  test 'creates a customization with a parent' do
     name = "thingy"
     type = Customization::OPTION
+    price = 10
+    parent = Customization.first
 
-    post '/customizations', params: { name: name, type: type }, as: :json
+    post '/customizations', params: { name: name, type: type, price: price, parent_id: parent.id }, as: :json
 
     customization = Customization.find(response.parsed_body["id"])
     assert_response :success
     assert_equal name, customization.name
     assert_equal type, customization.option_type
-    assert_equal 0, customization.price_in_cents
+    assert_equal price, customization.price_in_cents
+    assert_equal parent, customization.parent
   end
+
 end
