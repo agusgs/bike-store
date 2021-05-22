@@ -1,7 +1,6 @@
 import {Container, Link, Typography} from "@material-ui/core";
 import React from "react";
 import * as PropTypes from "prop-types";
-import {Link as RouterLink} from "react-router-dom";
 
 const Error = () => (
     <Container component="main" maxWidth="xs">
@@ -12,7 +11,7 @@ const Error = () => (
             There was an unexpected error in the application, please try again later. If the error persists create an &nbsp;
             <a href="https://github.com/agusgs/bike-store/issues" target="_blank">issue</a>.
         </Typography>
-        <Link href={'/'} onClick={()=>{}}>
+        <Link component="button" onClick={() => window.location.reload()}>
             Try Again
         </Link>
     </Container>

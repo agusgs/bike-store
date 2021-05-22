@@ -10,6 +10,7 @@ class ProductSerializerTest < ActiveSupport::TestCase
       assert_equal serialized[:id], product.id
       assert_equal serialized[:name], product.name
       assert_equal serialized[:price], product.price_in_cents
+      assert_equal serialized[:available], product.available
     end
   end
 end

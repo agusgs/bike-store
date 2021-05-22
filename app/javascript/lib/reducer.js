@@ -1,4 +1,4 @@
-import {getCustomizableAreas, getProducts, postOrder} from "./api";
+import {getCustomizableAreas, getAvailableProducts, postOrder} from "./api";
 import {
     apiGetError,
     apiGetPending,
@@ -52,7 +52,7 @@ export const actions = {
         }
     },
     getProducts: function(dispatch) {
-        const result = this.apiCall(dispatch)('products', getProducts)
+        const result = this.apiCall(dispatch)('products', getAvailableProducts)
         if (!result){
             dispatch({type: RESET_ORDER })
         }

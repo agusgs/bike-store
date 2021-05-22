@@ -18,7 +18,8 @@ class ProductSerializer
       {
         id: product.id,
         name: product.name,
-        price: product.price_in_cents
+        price: product.price_in_cents,
+        available: product.available
       }
     end
   end

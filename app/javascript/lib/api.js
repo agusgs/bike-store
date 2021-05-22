@@ -1,28 +1,62 @@
-export function getProducts() {
-    return fetch("/products?available=true").then(response => response.json())
+function getCSRFToken() {
+    return document.querySelector('[name=csrf-token]').content;
+}
+function apiCall(method, path, resource = null) {
+    const requestOptions = {
+        method: method,
+    }
+
+    if(method === 'POST' || method === 'PUT') {
+        requestOptions.headers = {
+            'Content-Type': 'application/json',
+                'X-CSRF-Token': getCSRFToken()
+        }
+    }
+
+    if(resource) {
+        requestOptions.body = JSON.stringify(resource)
+    }
+
+    return fetch(path, requestOptions).then((response) => {
+        if (!response.ok) {
+            console.log(response)
+            throw new Error('Network response was not ok');
+        }
+        return response.json()
+    })
+}
+function post(path, resource) {
+    return apiCall("POST", path, resource)
+}
+
+function get(path) {
+    return apiCall("GET", path);
+}
+
+export function getAvailableProducts() {
+    return getProducts("available=true")
+}
+
+export function getProducts(available) {
+    return get(`/products?${available ? available : ''}`)
+}
+
+export function createProduct(name, price, available) {
+    return post("/products", {name: name, price: price, available: available})
 }
 
 export function getCustomizableAreas(product) {
-    return fetch(`/customizable_areas?product_id=${product.id}`).then(response => response.json())
+    return get(`/customizable_areas?product_id=${product.id}`)
 }
 
 export function postOrder(product, customizations, personalData) {
-    const token = document.querySelector('[name=csrf-token]').content
-
     const order = {
         client_data: personalData,
         product_id: product.id,
         selected_customizations: customizations.map((customization) => mapCustomization(customization))
     }
 
-    return fetch("/orders", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': token
-        },
-        body: JSON.stringify(order) // body data type must match "Content-Type" header
-    }).then(response => response.json());
+    return post("/orders", order)
 }
 
 function mapCustomization(customization) {

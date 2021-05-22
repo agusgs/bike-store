@@ -7,21 +7,18 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Checkout from "./checkout";
-import {Link} from "@material-ui/core";
 
 const App = () => (
     <>
         <CssBaseline/>
         <AppContext>
             <Router>
-                <AppBar position="relative" color="default">
+                <AppBar position="relative">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit" noWrap>
-                                <RouterLink to={"/"}>
-                                    <Link component={"div"} onClick={()=>{}}>
-                                        Super Bike Store
-                                    </Link>
-                                </RouterLink>
+                        <Typography variant="h6">
+                            <RouterLink style={{color:"inherit"}} to={"/"}>
+                                Super Bike Store
+                            </RouterLink>
                         </Typography>
                     </Toolbar>
                 </AppBar>
