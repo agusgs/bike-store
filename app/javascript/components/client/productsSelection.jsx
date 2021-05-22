@@ -1,9 +1,9 @@
-import {customizableAreasState, productsState, totalAmountState} from "../lib/state";
+import {customizableAreasState, productsState, totalAmountState} from "../../lib/state";
 import {useAppContext} from "./context";
 import React, {useEffect} from "react";
 import {CustomizableAreas} from "./customizableAreas";
-import {AsyncOptions} from "./asyncOptions";
-import {euro, priceInDisplayName} from "../lib/money";
+import {AsyncOptions} from "../common/asyncOptions";
+import {euro, priceInDisplayName} from "../../lib/money";
 import {Button, CircularProgress} from "@material-ui/core";
 import {Link} from "react-router-dom";
 

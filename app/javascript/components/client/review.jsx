@@ -6,11 +6,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {useAppContext} from "../context";
+import {useAppContext} from "./context";
 import {checkoutState} from "../../lib/state";
 import {euro} from "../../lib/money";
 import {Collapse} from "@material-ui/core";
-import If from "../if";
+import If from "../common/if";
 
 const useStyles = makeStyles((theme) => ({
     listItem: {

@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Link as RouterLink, Route, Switch} from "react-
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Checkout from "./checkout/checkout";
+import Checkout from "./checkout";
 import {Link} from "@material-ui/core";
 
 const App = () => (

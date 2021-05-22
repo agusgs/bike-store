@@ -3,10 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import {useAppContext} from "../context";
+import {useAppContext} from "./context";
 import {checkoutState} from "../../lib/state";
 import {CircularProgress} from "@material-ui/core";
-import ErrorHandler from "../errorHandler";
+import ErrorHandler from "../common/errorHandler";
 import {Link} from "react-router-dom";
 
 export default function PersonalData(props) {

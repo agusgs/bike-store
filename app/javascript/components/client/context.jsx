@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createContext, memo, useContext, useReducer} from 'react';
-import {actions, reducer} from "../lib/reducer";
-import {initialState} from "../lib/state";
+import {actions, reducer} from "../../lib/reducer";
+import {initialState} from "../../lib/state";
 
 const appContext = createContext({
     state: {}, dispatch: () => { }, actions: {}

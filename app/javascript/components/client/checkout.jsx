@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Review from './review';
 import PersonalData from "./personalData";
 import {checkoutState} from "../../lib/state";
-import {useAppContext} from "../context";
+import {useAppContext} from "./context";
 import { Redirect } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     appBar: {

@@ -1,8 +1,8 @@
-import {customizableAreasState} from "../lib/state";
+import {customizableAreasState} from "../../lib/state";
 import {useAppContext} from "./context";
 import React from "react";
 import {Customization} from "./customizations";
-import {AsyncOptions} from "./asyncOptions";
+import {AsyncOptions} from "../common/asyncOptions";
 
 
 export function CustomizableAreas() {

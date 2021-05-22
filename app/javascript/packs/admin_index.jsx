@@ -4,7 +4,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from "../components/client/app";
+import App from "../components/admin/app";
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

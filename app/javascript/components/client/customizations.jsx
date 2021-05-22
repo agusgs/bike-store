@@ -1,7 +1,7 @@
-import OptionsCard from "./optionsCard";
+import OptionsCard from "../common/optionsCard";
 import React, {useState} from "react";
 import * as PropTypes from "prop-types";
-import {priceInDisplayName} from "../lib/money";
+import {priceInDisplayName} from "../../lib/money";
 
 class CustomizationOptions extends React.Component {
     constructor(props) {
