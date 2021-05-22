@@ -15,7 +15,7 @@ export function postOrder(product, customizations, personalData) {
         selected_customizations: customizations.map((customization) => mapCustomization(customization))
     }
 
-    return fetch("/orders/create", {
+    return fetch("/orders", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
