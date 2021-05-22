@@ -32,7 +32,7 @@ class OrderCreator
           parent: parent,
           customization: customization,
         )
-        order_customization.children = sub_customizations(order_customization, selected_sub_customization) { |id| customization.children.find(id) }
+        order_customization.children = sub_customizations(order_customization, selected_sub_customization) { |id| customization.customizations.find(id) }
         order_customization.save!
         order_customization
       end

@@ -7,9 +7,9 @@ class CustomizationSerializerTest < ActiveSupport::TestCase
     assert_equal serialized[:name], customization.name
     assert_equal serialized[:price], customization.price_in_cents
     assert_equal serialized[:option_type], customization.option_type
-    assert_equal serialized[:customizations].count, customization.children.count
+    assert_equal serialized[:customizations].count, customization.customizations.count
     serialized[:customizations].each do |serialized_customization|
-      assert_is_serialized_correctly(customization.children.find(serialized_customization[:id]), serialized_customization)
+      assert_is_serialized_correctly(customization.customizations.find(serialized_customization[:id]), serialized_customization)
     end
   end
 

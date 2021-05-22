@@ -1,31 +1,53 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-red:
-  name: "red"
+--- !omap
 
-blue:
+wheel_17:
+  name: "18"
+  price_in_cents: 1800
+
+wheel_17_blue:
   name: "blue"
+  parent: wheel_17
 
-green:
+wheel_17_green:
   name: "green"
-
-background_color:
-    name: "background color"
-
-pattern_color:
-    name: "pattern color"
+  parent: wheel_17
 
 with_pattern:
-  name: "spotted pattern"
-  option_type: <%=Customization::CONTAINER%>
-  price_in_cents: 1700
+  name: "with_pattern"
+  parent: wheel_17
+
+background_color:
+  name: "background_color"
+  parent: with_pattern
+
+background_color_red:
+  name: "red"
+  parent: background_color
+
+background_color_blue:
+  name: "blue"
+  parent: background_color
+
+pattern_color:
+  name: "pattern_color"
+  parent: with_pattern
+
+pattern_color_green:
+  name: "green"
+  parent: pattern_color
+
+pattern_color_blue:
+  name: "blue"
+  parent: pattern_color
 
 wheel_12:
   name: "12"
   price_in_cents: 1200
 
-wheel_17:
-  name: "18"
-  price_in_cents: 1800
+wheel_12_red:
+  name: "red"
+  parent: wheel_12
 
 plastic_mudguard:
   name: "plastic mudguard"
@@ -34,3 +56,12 @@ plastic_mudguard:
 metal_mudguard:
   name: "metal mudguard"
   price_in_cents: 2000
+
+metal_mudguard_red:
+  name: "red"
+  parent: metal_mudguard
+
+metal_mudguard_green:
+  name: "green"
+  parent: metal_mudguard
+

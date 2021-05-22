@@ -9,8 +9,8 @@ class CreateOrderTest < ActiveSupport::TestCase
     @with_pattern = customizations(:with_pattern)
     @background_color = customizations(:background_color)
     @pattern_color = customizations(:pattern_color)
-    @blue = customizations(:blue)
-    @green = customizations(:green)
+    @blue = customizations(:background_color_blue)
+    @green = customizations(:pattern_color_green)
     @metal_mudguard = customizations(:metal_mudguard)
 
     @request = {

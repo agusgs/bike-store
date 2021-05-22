@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_222821) do
+ActiveRecord::Schema.define(version: 2021_05_22_032801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,16 +41,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_222821) do
     t.integer "price_in_cents", default: 0, null: false
     t.bigint "parent_id"
     t.index ["parent_id"], name: "index_customizations_on_parent_id"
-  end
-
-  create_table "dependant_customizations", force: :cascade do |t|
-    t.bigint "customization_id", null: false
-    t.bigint "child_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["child_id"], name: "index_dependant_customizations_on_child_id"
-    t.index ["customization_id", "child_id"], name: "index_dependant_customizations_on_customization_id_and_child_id", unique: true
-    t.index ["customization_id"], name: "index_dependant_customizations_on_customization_id"
   end
 
   create_table "order_customizations", force: :cascade do |t|
@@ -104,8 +94,6 @@ ActiveRecord::Schema.define(version: 2021_05_21_222821) do
   add_foreign_key "available_customizations", "customizations"
   add_foreign_key "customizable_areas", "products"
   add_foreign_key "customizations", "customizations", column: "parent_id"
-  add_foreign_key "dependant_customizations", "customizations"
-  add_foreign_key "dependant_customizations", "customizations", column: "child_id"
   add_foreign_key "order_customizations", "customizations"
   add_foreign_key "order_customizations", "order_customizations", column: "parent_id"
   add_foreign_key "order_customized_area_customizations", "order_customizations"

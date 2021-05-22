@@ -52,7 +52,7 @@ class CustomizationsTest < ActiveSupport::TestCase
                 id: customization.id,
                 selected_customizations: [
                   {
-                    id: customization.children.first.id,
+                    id: customization.customizations.first.id,
                     selected_customizations: [
                       {
                         id: @non_existent_id
@@ -80,12 +80,7 @@ class CustomizationsTest < ActiveSupport::TestCase
     setup do
       product = products(:awesome_bike)
       customizable_area = product.customizable_areas.first
-      @non_existent_id = Customization.
-        joins(:dependant_customizations).
-        where.
-        not("dependant_customizations.child_id IN (?)", customizable_area.customizations.map(&:id)).
-        first.
-        id
+      @non_existent_id = product.customizable_areas.second.customizations.first.id
 
       @request = {
         client_data:{
@@ -120,7 +115,7 @@ class CustomizationsTest < ActiveSupport::TestCase
       customizable_area = product.customizable_areas.first
       customization = customizable_area.customizations.first
 
-      @non_existent_id = Customization.where.not(id: customization.children)
+      @non_existent_id = Customization.where.not(id: customization.customizations)
 
       @request = {
         client_data:{

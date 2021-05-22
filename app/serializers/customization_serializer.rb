@@ -1,6 +1,6 @@
 class CustomizationSerializer
   def initialize(customizations)
-    @customizations = customizations.eager_load(dependant_customizations: :child)
+    @customizations = customizations.eager_load(customizations: :customizations)
   end
 
   attr_reader :customizations, :prefix
@@ -13,7 +13,7 @@ class CustomizationSerializer
         name: customization.name,
         option_type: customization.option_type,
         price: customization.price_in_cents,
-        customizations: CustomizationSerializer.new(customization.children).serialize
+        customizations: CustomizationSerializer.new(customization.customizations).serialize
       }
     end
   end
