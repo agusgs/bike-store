@@ -3,7 +3,7 @@ require "test_helper"
 class CustomizableAreaTest < ActiveSupport::TestCase
   class WithANoneExistentCustomizableArea < ActiveSupport::TestCase
     setup do
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -14,7 +14,7 @@ class CustomizableAreaTest < ActiveSupport::TestCase
             selected_customizations: {}
           }
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do
@@ -27,7 +27,7 @@ class CustomizableAreaTest < ActiveSupport::TestCase
 
   class WhenTheCustomizableAareaDoesNotBelongsToTheProduct < ActiveSupport::TestCase
     setup do
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -38,7 +38,7 @@ class CustomizableAreaTest < ActiveSupport::TestCase
             selected_customizations: {}
           }
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do

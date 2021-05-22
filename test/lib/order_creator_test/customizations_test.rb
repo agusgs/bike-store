@@ -6,7 +6,7 @@ class CustomizationsTest < ActiveSupport::TestCase
       product = products(:awesome_bike)
       customizable_area = product.customizable_areas.first
       @non_existent_id = Customization.last.id + 1
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -21,7 +21,7 @@ class CustomizationsTest < ActiveSupport::TestCase
             ]
           },
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do
@@ -39,7 +39,7 @@ class CustomizationsTest < ActiveSupport::TestCase
       customizable_area = product.customizable_areas.first
       customization = customizable_area.customizations.first
       @non_existent_id = Customization.last.id + 1
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -64,7 +64,7 @@ class CustomizationsTest < ActiveSupport::TestCase
             ]
           },
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do
@@ -82,7 +82,7 @@ class CustomizationsTest < ActiveSupport::TestCase
       customizable_area = product.customizable_areas.first
       @non_existent_id = product.customizable_areas.second.customizations.first.id
 
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -97,7 +97,7 @@ class CustomizationsTest < ActiveSupport::TestCase
             ]
           },
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do
@@ -117,7 +117,7 @@ class CustomizationsTest < ActiveSupport::TestCase
 
       @non_existent_id = Customization.where.not(id: customization.customizations)
 
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
@@ -137,7 +137,7 @@ class CustomizationsTest < ActiveSupport::TestCase
             ]
           },
         ]
-      }
+      })
     end
 
     test 'fails with not found error' do

@@ -3,12 +3,12 @@ require "test_helper"
 class ProductTest < ActiveSupport::TestCase
   class NoneExistentProduct < ActiveSupport::TestCase
     setup do
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
         product_id: Product.all.order(:id).last.id + 1
-      }
+      })
     end
 
     test 'when the product does not exists, fails with not found error' do
@@ -21,12 +21,12 @@ class ProductTest < ActiveSupport::TestCase
 
   class UnavailableProduct < ActiveSupport::TestCase
     setup do
-      @request = {
+      @request = ActionController::Parameters.new({
         client_data:{
           client_name: "name", client_lastname: "last name", client_email: "email@example.com"
         },
         product_id: products(:old_bike)
-      }
+      })
     end
 
     test 'when the product does not exists, fails with not found error' do

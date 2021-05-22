@@ -13,7 +13,7 @@ class CreateOrderTest < ActiveSupport::TestCase
     @green = customizations(:pattern_color_green)
     @metal_mudguard = customizations(:metal_mudguard)
 
-    @request = {
+    @request = ActionController::Parameters.new({
       client_data:{
         client_name: "name", client_lastname: "last name", client_email: "email@example.com"
       },
@@ -38,7 +38,7 @@ class CreateOrderTest < ActiveSupport::TestCase
         },
         { id: @mudguards.id, selected_customizations: [{ id: @metal_mudguard.id }] }
       ]
-    }
+    })
   end
 
   test "creates the order" do

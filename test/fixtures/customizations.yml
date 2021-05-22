@@ -65,3 +65,10 @@ metal_mudguard_green:
   name: "green"
   parent: metal_mudguard
 
+mb_wheel_12:
+  name: "12"
+  price_in_cents: 1200
+
+mb_wheel_12_red:
+  name: "red"
+  parent: wheel_12
