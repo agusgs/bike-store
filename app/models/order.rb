@@ -14,6 +14,6 @@ class Order < ApplicationRecord
   validates :client_email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def total
-    product.price_in_cents + order_customized_areas.map{ |order_customized_area| order_customized_area.total }.sum
+    product.price_in_cents + order_customized_areas.map(&:total).sum
   end
 end

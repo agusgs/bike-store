@@ -24,8 +24,9 @@ class ProductSerializer
       }
 
       if deep
-        mapped[:customizable_areas] = CustomizableAreaSerializer.new(product.customizable_areas).serialize
+        mapped[:customizable_areas] = CustomizableAreaSerializer.serialize(product.customizable_areas, deep)
       end
+
       mapped
     end
   end

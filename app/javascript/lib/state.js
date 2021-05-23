@@ -64,7 +64,7 @@ export function customizableAreasState(context) {
 }
 
 export function areaCustomized(state, customizableArea, selectedCustomizations) {
-    const customizedCustomizableAreas = state.order.selectedCustomizations.filter((customizedArea) => customizedArea.token !== customizableArea.token);
+    const customizedCustomizableAreas = state.order.selectedCustomizations.filter((customizedArea) => customizedArea.id !== customizableArea.id);
     return {
         ...state, order: {
             ...state.order,

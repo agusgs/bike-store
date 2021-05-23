@@ -1,7 +1,7 @@
 class OrderCustomizedAreaSerializer
   attr_reader :order_customized_areas, :deep
 
-  def self.serialize(order_customized_areas, deep: false)
+  def self.serialize(order_customized_areas, deep = false)
     new(order_customized_areas, deep).serialize
   end
 
@@ -14,14 +14,11 @@ class OrderCustomizedAreaSerializer
     order_customized_areas.map do |order_customized_area|
       serialized = {
         id: order_customized_area.id,
-        customizable_area: {
-          id: order_customized_area.customizable_area.id,
-          name: order_customized_area.customizable_area.name
-        }
+        customizable_area: CustomizableAreaSerializer.serialize(order_customized_area.customizable_area)
       }
 
       if deep
-        serialized[:order_customizations] = OrderCustomizationSerializer.serialize(order_customized_area.order_customizations)
+        serialized[:order_customizations] = OrderCustomizationSerializer.serialize(order_customized_area.order_customizations, deep: deep)
       end
 
       serialized

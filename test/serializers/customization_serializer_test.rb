@@ -1,25 +1,29 @@
 require "test_helper"
 
 class CustomizationSerializerTest < ActiveSupport::TestCase
-  def assert_is_serialized_correctly(customization, serialized)
-    assert_equal serialized[:id], customization.id
-    assert serialized[:token].present?
-    assert_equal serialized[:name], customization.name
-    assert_equal serialized[:price], customization.price_in_cents
-    assert_equal serialized[:option_type], customization.option_type
-    assert_equal serialized[:customizations].count, customization.customizations.count
-    serialized[:customizations].each do |serialized_customization|
-      assert_is_serialized_correctly(customization.customizations.find(serialized_customization[:id]), serialized_customization)
+  test "serializes correctly with deep flag off" do
+    CustomizationSerializer.serialize(Customization.all).each do |serialized|
+      customization = Customization.find(serialized[:id])
+
+      assert_equal serialized[:id], customization.id
+      assert serialized[:token].present?
+      assert_equal serialized[:name], customization.name
+      assert_equal serialized[:price], customization.price_in_cents
+      assert_equal serialized[:option_type], customization.option_type
+      assert_nil serialized[:customizations]
     end
   end
 
-  test "serializes the customizations correctly" do
-    customizations = Customization.all
-    serialized_customizations = CustomizationSerializer.new(customizations).serialize
+  test "serializes correctly with deep flag on" do
+    CustomizationSerializer.serialize(Customization.all, deep: true).each do |serialized|
+      customization = Customization.find(serialized[:id])
 
-    serialized_customizations.each do |serialized|
-      assert_is_serialized_correctly(customizations.find(serialized[:id]), serialized)
+      assert_equal serialized[:id], customization.id
+      assert serialized[:token].present?
+      assert_equal serialized[:name], customization.name
+      assert_equal serialized[:price], customization.price_in_cents
+      assert_equal serialized[:option_type], customization.option_type
+      assert_equal serialized[:customizations], CustomizationSerializer.serialize(customization.customizations, deep: true)
     end
   end
-  private
 end

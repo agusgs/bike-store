@@ -2,8 +2,16 @@
 
 one:
   order: one
-  customizable_area: one
+  customizable_area: wheels
 
 two:
+  order: one
+  customizable_area: mudguards
+
+three:
+  order: with_one_customization
+  customizable_area: mountain_bike_wheels
+
+without_customizations:
   order: two
-  customizable_area: two
+  customizable_area: mountain_bike_wheels

@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  order_customized_area: one
-  order_customization: one
+  order_customized_area: wheels
+  order_customization: wheels_wheel_17
 
 two:
-  order_customized_area: two
-  order_customization: two
+  order_customized_area: mudguards
+  order_customization: mudguard_plastic_mudguard
+
+three:
+  order_customized_area: three
+  order_customization: three

@@ -24,11 +24,7 @@ class OrderSerializer
         client_email: order.client_email,
         status: order.status,
         total: order.total,
-        product: {
-          id: order.product.id,
-          name: order.product.name,
-          price: order.product.price_in_cents
-        }
+        product: ProductSerializer.serialize(order.product)
       }
 
       if deep

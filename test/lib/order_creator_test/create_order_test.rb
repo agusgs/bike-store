@@ -54,13 +54,13 @@ class CreateOrderTest < ActiveSupport::TestCase
       OrderCreator.new(@request).execute
     end
 
-    assert_equal OrderCustomizedArea.find_by(customizable_area: @wheels).order, Order.last
-    assert_equal OrderCustomizedArea.find_by(customizable_area: @mudguards).order, Order.last
+    assert OrderCustomizedArea.where(customizable_area: @wheels).pluck(:order_id).include?(Order.last.id)
+    assert OrderCustomizedArea.where(customizable_area: @mudguards).pluck(:order_id).include?(Order.last.id)
   end
 
-  def assert_order_customization_created(integer, order_customization_wheel_17, order_customization_with_pattern)
-    assert_equal order_customization_with_pattern.parent, order_customization_wheel_17
-    assert_equal order_customization_with_pattern.children.size, integer
+  def assert_order_customization_created(children_count, parent, order_customization)
+    assert_equal order_customization.parent, parent
+    assert_equal order_customization.children.size, children_count
   end
 
   test "creates the order customizations" do
@@ -70,25 +70,25 @@ class CreateOrderTest < ActiveSupport::TestCase
       OrderCreator.new(@request).execute
     end
 
-    oc_wheel_17 = OrderCustomization.find_by(customization: @wheel_17)
+    oc_wheel_17 = OrderCustomization.where(customization: @wheel_17).order(:id).last
     assert_order_customization_created(1, nil, oc_wheel_17)
 
-    oc_with_pattern = OrderCustomization.find_by(customization: @with_pattern)
+    oc_with_pattern = OrderCustomization.where(customization: @with_pattern).order(:id).last
     assert_order_customization_created(2, oc_wheel_17, oc_with_pattern)
 
-    oc_patter_color = OrderCustomization.find_by(customization: @pattern_color)
+    oc_patter_color = OrderCustomization.where(customization: @pattern_color).order(:id).last
     assert_order_customization_created(1, oc_with_pattern, oc_patter_color)
 
-    ac_background_color = OrderCustomization.find_by(customization: @background_color)
+    ac_background_color = OrderCustomization.where(customization: @background_color).order(:id).last
     assert_order_customization_created(1, oc_with_pattern, ac_background_color)
 
-    ac_blue = OrderCustomization.find_by(customization: @blue)
+    ac_blue = OrderCustomization.where(customization: @blue).order(:id).last
     assert_order_customization_created(0, ac_background_color, ac_blue)
 
-    ac_green = OrderCustomization.find_by(customization: @green)
+    ac_green = OrderCustomization.where(customization: @green).order(:id).last
     assert_order_customization_created(0, oc_patter_color, ac_green)
 
-    ac_metal_mudguard = OrderCustomization.find_by(customization: @metal_mudguard)
+    ac_metal_mudguard = OrderCustomization.where(customization: @metal_mudguard).order(:id).last
     assert_order_customization_created(0, nil, ac_metal_mudguard)
   end
 end

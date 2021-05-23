@@ -7,6 +7,6 @@ class OrderCustomizedArea < ApplicationRecord
   validates_presence_of :customizable_area
 
   def total
-    order_customizations.map { |order_customization| order_customization.total }.sum
+    order_customizations.map(&:total).sum
   end
 end

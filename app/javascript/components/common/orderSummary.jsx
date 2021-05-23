@@ -44,9 +44,9 @@ function LineItem(props) {
     function subItems() {
         if(props.childCustomization) {
             if (Array.isArray(props.childCustomization) && props.childCustomization.length > 0) {
-                return list(props.childCustomization.map(item => <LineItem key={props.token} classes={props.classes} {...item}/>))
+                return list(props.childCustomization.map(item => <LineItem key={props.id} classes={props.classes} {...item}/>))
             } else {
-                return list(<LineItem key={props.token} classes={props.classes} {...props.childCustomization}/>)
+                return list(<LineItem key={props.id} classes={props.classes} {...props.childCustomization}/>)
             }
         } else {
             return null

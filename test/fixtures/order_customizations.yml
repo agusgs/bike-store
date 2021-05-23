@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  customization: one
-  parent: one
+  customization: wheel_17
 
 two:
-  customization: two
-  parent: two
+  customization: wheel_17_blue
+  parent: wheel_17
+
+three:
+  customization: mb_wheel_12

@@ -4,7 +4,7 @@ class CustomizableAreasController < ApplicationController
     customizable_areas = CustomizableArea.all
     customizable_areas = product_id.present? ? customizable_areas.where(product_id: product_id) : customizable_areas
 
-    render json: ::CustomizableAreaSerializer.new(customizable_areas).serialize
+    render json: ::CustomizableAreaSerializer.serialize(customizable_areas, deep:true)
   end
 
   def create
