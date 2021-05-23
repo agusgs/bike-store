@@ -15,4 +15,15 @@ class ProductsController < ApplicationController
 
     render json: ::ProductSerializer.serialize(Product.create!(name: name, available: available, price_in_cents: price))
   end
+
+  def show
+    product_id = params.require(:id)
+    render json: ::ProductSerializer.serialize(Product.find(product_id), deep: true)
+  end
+
+  def update
+    product_id = params.require(:id)
+    available = params.require(:available)
+    render json: ::Product.find(product_id).update!(available: available)
+  end
 end

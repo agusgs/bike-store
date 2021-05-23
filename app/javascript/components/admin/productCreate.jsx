@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {CardActions, CircularProgress, FormControlLabel, Snackbar, Switch} from "@material-ui/core";
+import {CardActions, CircularProgress, FormControlLabel, Switch} from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -8,25 +8,16 @@ import {CenteredCard} from "../common/centeredCard";
 import Button from "@material-ui/core/Button";
 import {createProduct} from "../../lib/api";
 import {useSnackbar} from 'notistack';
+import {Link, useHistory} from 'react-router-dom';
 
-export function ProductCreatePage() {
+export function ProductCreate(props) {
     const { enqueueSnackbar } = useSnackbar();
     const [name, setName] = React.useState("");
     const [nameError, setNameError] = React.useState(false);
     const [price, setPrice] = React.useState(0);
     const [available, setAvailable] = React.useState(false);
     const [asyncState, setAsyncState] = useState({loading: false, error: false, created: {}})
-
-    function handleCancel() {
-        setName("")
-        setPrice(0)
-        setAvailable(false)
-        setNameError(false)
-    }
-
-    function handleSuccess() {
-
-    }
+    const history = useHistory();
 
     function handleCreate() {
         validateName()
@@ -35,7 +26,7 @@ export function ProductCreatePage() {
             createProduct(name, price, available).then((created) => {
                 setAsyncState({loading: false, error: false, created: created})
                 enqueueSnackbar('Product created', { variant: "success" })
-                handleSuccess()
+                history.push(`/admin/products/update/${created.id}`)
             }).catch(() => {
                 setAsyncState({loading: false, error: true, created: {}})
                 enqueueSnackbar('There was an error creating your product', { variant: "error" })
@@ -105,16 +96,13 @@ export function ProductCreatePage() {
                             label="Listed"/>
                     </Grid>
                 </Grid>
-
-
             </CardContent>
             <CardActions>
                 <Button
                     variant="contained"
                     disabled={asyncState.loading}
-                    onClick={handleCancel}
                 >
-                    Cancel
+                    <Link to={"/admin/products"} style={{color: "inherit", textDecoration: "none"}}>Cancel</Link>
                 </Button>
                 <Button
                     variant="contained"

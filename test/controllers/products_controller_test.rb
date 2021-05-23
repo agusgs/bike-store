@@ -54,6 +54,17 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_equal before_post_product_count, Product.count
   end
 
+  test "get a product" do
+    product = products(:mountain_bike)
+    get "/products/#{product.id}"
+
+    assert_response :success
+    product_response = response.parsed_body.deep_symbolize_keys
+    assert_equal product.id, product_response[:id]
+    assert_equal product.name, product_response[:name]
+    assert product_response[:customizable_areas].present?
+  end
+
   private
 
   def assert_success_index_response(products)

@@ -3,29 +3,33 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {AdminAppBar} from "./adminAppBar";
 import {ProductsPage} from "./productsPage";
-import {ProductCreatePage} from "./productCreatePage";
 import {SnackbarProvider} from "notistack";
+import {ProductCreate} from "./productCreate";
+import {ProductUpdate} from "./productUpdate";
 
 const App = () => {
     return (
         <>
             <CssBaseline/>
-            <SnackbarProvider maxSnack={5}>
-                <Router>
+            <Router>
+                <SnackbarProvider maxSnack={5}>
                     <AdminAppBar/>
                     <Switch>
                         <Route exact path="/admin">
                             {"Admin home page"}
                         </Route>
                         <Route path="/admin/products/create">
-                            <ProductCreatePage/>
+                            <ProductCreate/>
+                        </Route>
+                        <Route path="/admin/products/update/:id">
+                            <ProductUpdate/>
                         </Route>
                         <Route path="/admin/products">
                             <ProductsPage/>
                         </Route>
                     </Switch>
-                </Router>
-            </SnackbarProvider>
+                </SnackbarProvider>
+            </Router>
         </>
     )
 }

@@ -1,19 +1,20 @@
 function getCSRFToken() {
     return document.querySelector('[name=csrf-token]').content;
 }
+
 function apiCall(method, path, resource = null) {
     const requestOptions = {
         method: method,
     }
 
-    if(method === 'POST' || method === 'PUT') {
+    if (method === 'POST' || method === 'PUT') {
         requestOptions.headers = {
             'Content-Type': 'application/json',
-                'X-CSRF-Token': getCSRFToken()
+            'X-CSRF-Token': getCSRFToken()
         }
     }
 
-    if(resource) {
+    if (resource) {
         requestOptions.body = JSON.stringify(resource)
     }
 
@@ -25,8 +26,13 @@ function apiCall(method, path, resource = null) {
         return response.json()
     })
 }
+
 function post(path, resource) {
     return apiCall("POST", path, resource)
+}
+
+function put(path, resource) {
+    return apiCall("PUT", path, resource)
 }
 
 function get(path) {
@@ -41,8 +47,34 @@ export function getProducts(available) {
     return get(`/products?${available ? available : ''}`)
 }
 
+export function getProduct(id) {
+    return get(`/products/${id}`)
+}
 export function createProduct(name, price, available) {
     return post("/products", {name: name, price: price, available: available})
+}
+
+export function updateProduct(id, available) {
+    return put(`/products/${id}?available=${available}`)
+}
+
+export function createCustomization(parent, name, price, selectedOption) {
+    if (!parent.customizableArea) {
+        return post("/customizations", {name: name, price: price, type: selectedOption, parent_id: parent.id})
+    } else {
+        return post("/customizations", {name: name, price: price, type: selectedOption}).then((customization) => {
+            return post("/available_customizations", {
+                customizable_area_id: parent.id,
+                customization_id: customization.id
+            }).then(() => {
+                return customization
+            })
+        })
+    }
+}
+
+export function createCustomizableArea(product, name) {
+    return post("/customizable_areas", {product_id: product.id, name: name})
 }
 
 export function getCustomizableAreas(product) {

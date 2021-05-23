@@ -8,7 +8,7 @@ import {Spinner} from "../common/spinner";
 import Button from "@material-ui/core/Button";
 import {Card, CardActions, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import CardContent from "@material-ui/core/CardContent";
 
 const useStyles = makeStyles({
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 export function ProductsPage() {
     const classes = useStyles();
     const [asyncState, setAsyncState] = useState({loading: true, error: false, products: []})
+    const history = useHistory();
 
     useEffect(() => {
         getProducts().then((products) => {
@@ -30,13 +31,7 @@ export function ProductsPage() {
         }).catch((_e) => {
             setAsyncState({loading: false, error: true, products: []})
         })
-        return () => {
-        }
     }, [])
-
-    function createProduct() {
-
-    }
 
     const content = () => (
         <TableContainer component={Paper}>
@@ -51,12 +46,12 @@ export function ProductsPage() {
                 </TableHead>
                 <TableBody>
                     {asyncState.products.map((product) => (
-                        <TableRow key={product.id}>
-                            <TableCell component="th" scope="row"> {product.id} </TableCell>
-                            <TableCell>{product.name}</TableCell>
-                            <TableCell>{product.available ? "YES" : "NO"}</TableCell>
-                            <TableCell align="right">{euro(product.price).format()}</TableCell>
-                        </TableRow>
+                            <TableRow onClick={() => { history.push(`/admin/products/update/${product.id}`)}} key={product.id}>
+                                <TableCell component="th" scope="row"> {product.id} </TableCell>
+                                <TableCell>{product.name}</TableCell>
+                                <TableCell>{product.available ? "YES" : "NO"}</TableCell>
+                                <TableCell align="right">{euro(product.price).format()}</TableCell>
+                            </TableRow>
                     ))}
                 </TableBody>
             </Table>

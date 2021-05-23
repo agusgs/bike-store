@@ -3,7 +3,7 @@ require "test_helper"
 class ProductSerializerTest < ActiveSupport::TestCase
   test "serializes the products areas correctly" do
     products = Product.all
-    serialized_products = ProductSerializer.new(products).serialize
+    serialized_products = ProductSerializer.serialize(products)
 
     serialized_products.each do |serialized|
       product = products.find(serialized[:id])

@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#index'
   get 'admin/products', to: 'admin#index'
   get 'admin/products/create', to: 'admin#index'
+  get 'admin/products/update/:id', to: 'admin#index'
 
-  resources :products, only: [:index, :create]
+  resources :products, only: [:index, :create, :show, :update]
   resources :orders, only: [:create]
 
   resources :customizable_areas, only: [:index, :create]

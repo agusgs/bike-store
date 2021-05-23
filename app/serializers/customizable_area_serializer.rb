@@ -5,7 +5,7 @@ class CustomizableAreaSerializer
 
   attr_reader :customizable_areas
 
-  def serialize()
+  def serialize
     customizable_areas.map do |customizable_area|
       {
         id: customizable_area.id,
