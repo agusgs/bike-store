@@ -4,9 +4,10 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {AdminAppBar} from "./adminAppBar";
 import {ProductsPage} from "./productsPage";
 import {SnackbarProvider} from "notistack";
-import {ProductCreate} from "./productCreate";
 import {ProductUpdate} from "./productUpdate";
 import {OrdersPage} from "./ordersPage";
+import {OrderPage} from "./orderPage";
+import {ProductCreate} from "./productCreate";
 
 const App = () => {
     return (
@@ -18,6 +19,9 @@ const App = () => {
                     <Switch>
                         <Route exact path="/admin">
                             <OrdersPage/>
+                        </Route>
+                        <Route path={"/admin/orders/:id"}>
+                            <OrderPage/>
                         </Route>
                         <Route path="/admin/products/create">
                             <ProductCreate/>

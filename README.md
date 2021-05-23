@@ -1,6 +1,10 @@
 # The Bike Store
 Visit the deployed website [here](https://bike-store-agusgs.herokuapp.com/) 
 
+If you go to [/](https://bike-store-agusgs.herokuapp.com/) you are going to see the available products and customizations. There you can pick what you want and order it.
+
+The admin pages are in [/admin](https://bike-store-agusgs.herokuapp.com/admin). There you can check the placed orders, the existent products, and you can create new products and customizations.
+
 ### Development Setup
 ##### Prerequisites
 

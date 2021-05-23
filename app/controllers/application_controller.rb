@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   rescue_from Exception do |e|
+    Rails.logger.error(e.message)
     render json: { error: e.message }, status: 500
   end
 

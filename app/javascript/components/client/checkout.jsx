@@ -4,12 +4,12 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
-import Review from './review';
 import PersonalData from "./personalData";
 import {checkoutState} from "../../lib/state";
 import {useAppContext} from "./context";
 import {Redirect} from "react-router-dom";
 import {CenteredCard} from "../common/centeredCard";
+import {Review} from "./review";
 
 const useStyles = makeStyles((theme) => ({
     stepper: {

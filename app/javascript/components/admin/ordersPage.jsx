@@ -53,7 +53,7 @@ export function OrdersPage() {
                                 <TableCell>{order.client_lastname}</TableCell>
                                 <TableCell>{order.client_email}</TableCell>
                                 <TableCell>{order.status}</TableCell>
-                                <TableCell align="right">{euro(order.price).format()}</TableCell>
+                                <TableCell align="right">{euro(order.total).format()}</TableCell>
                             </TableRow>
                     ))}
                 </TableBody>

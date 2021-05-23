@@ -85,6 +85,14 @@ export function getOrders() {
     return get('/orders')
 }
 
+export function getOrder(id) {
+    return get(`/orders/${id}`)
+}
+
+export function updateOrder(id, status) {
+    return put(`/orders/${id}?status=${status}`)
+}
+
 export function postOrder(product, customizations, personalData) {
     const order = {
         client_data: personalData,

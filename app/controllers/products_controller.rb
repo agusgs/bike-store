@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   def index
     available = params.permit(:available)[:available]
 
-    products = Product.all
+    products = Product.all.order(available: :desc).order(id: :desc)
     products = available.present? ? products.where(available: available) : products
 
     render json: ::ProductSerializer.serialize(products)
