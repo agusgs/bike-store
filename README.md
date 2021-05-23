@@ -73,3 +73,5 @@ You can also run jest tests in watch mode
 yarn test-watch
 ```
 
+### Core entities
+Please check [the entity relation pdf](erd.pdf)
