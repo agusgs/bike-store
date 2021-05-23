@@ -1,6 +1,6 @@
 import React from 'react'
 import {render, screen} from "@testing-library/react";
-import OptionsCard from "../../../app/javascript/components/common/optionsCard";
+import OptionsCard from "../../../../app/javascript/components/common/optionsCard";
 import '@testing-library/jest-dom/extend-expect'
 
 let name = 'the name'

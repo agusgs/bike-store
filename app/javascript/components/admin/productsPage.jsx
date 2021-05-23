@@ -10,6 +10,7 @@ import {Card, CardActions, Table, TableBody, TableCell, TableContainer, TableHea
 import Paper from "@material-ui/core/Paper";
 import {Link, useHistory} from "react-router-dom";
 import CardContent from "@material-ui/core/CardContent";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles({
     title: {
@@ -46,7 +47,7 @@ export function ProductsPage() {
                 </TableHead>
                 <TableBody>
                     {asyncState.products.map((product) => (
-                            <TableRow hover onClick={() => { history.push(`/admin/products/update/${product.id}`)}} key={product.id}>
+                            <TableRow hover onClick={() => { history.push(`/admin/products/update/${product.id}`)}} key={uuidv4()}>
                                 <TableCell component="th" scope="row"> {product.id} </TableCell>
                                 <TableCell>{product.name}</TableCell>
                                 <TableCell>{product.available ? "YES" : "NO"}</TableCell>

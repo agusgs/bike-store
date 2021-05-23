@@ -9,6 +9,7 @@ import {Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} 
 import Paper from "@material-ui/core/Paper";
 import {useHistory} from "react-router-dom";
 import CardContent from "@material-ui/core/CardContent";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles({
     title: {
@@ -47,7 +48,7 @@ export function OrdersPage() {
                 </TableHead>
                 <TableBody>
                     {asyncState.orders.map((order) => (
-                            <TableRow hover onClick={() => { history.push(`/admin/orders/${order.id}`)}} key={order.id}>
+                            <TableRow hover onClick={() => { history.push(`/admin/orders/${order.id}`)}} key={uuidv4()}>
                                 <TableCell component="th" scope="row"> {order.id} </TableCell>
                                 <TableCell>{order.client_name}</TableCell>
                                 <TableCell>{order.client_lastname}</TableCell>

@@ -4,13 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Link} from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import {useAppContext} from "../client/context";
-import {checkoutState} from "../../lib/state";
 import {euro} from "../../lib/money";
 import {Collapse} from "@material-ui/core";
 import If from "./if";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     listItem: {
@@ -42,11 +39,12 @@ function LineItem(props) {
     }
 
     function subItems() {
-        if(props.childCustomization) {
+        if (props.childCustomization) {
             if (Array.isArray(props.childCustomization) && props.childCustomization.length > 0) {
-                return list(props.childCustomization.map(item => <LineItem key={props.id} classes={props.classes} {...item}/>))
+                return list(props.childCustomization.map(item => <LineItem key={uuidv4()}
+                                                                           classes={props.classes} {...item}/>))
             } else {
-                return list(<LineItem key={props.id} classes={props.classes} {...props.childCustomization}/>)
+                return list(<LineItem key={uuidv4()} classes={props.classes} {...props.childCustomization}/>)
             }
         } else {
             return null
@@ -83,7 +81,7 @@ export default function OrderSummary(props) {
                     </Typography>
                 </ListItem>
                 <LineItem
-                    key={product.id}
+                    key={uuidv4()}
                     name={product.name}
                     childCustomization={customizations}
                     price={product.price}

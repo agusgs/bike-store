@@ -24,6 +24,7 @@ import {Spinner} from "../common/spinner";
 import CustomizationCreationModal from "./customizationCreationModal";
 import List from "@material-ui/core/List";
 import {useSnackbar} from "notistack";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     heading: {
@@ -61,7 +62,7 @@ function AvailableCustomizations(props) {
                     <List component="div" disablePadding>
                         {
                             customizations.map((customization) => (
-                                <ListItem component={"div"} key={customization.id}>
+                                <ListItem component={"div"} key={uuidv4()}>
                                     <AvailableCustomizations
                                         parent={customization}
                                         customizations={customization.customizations || []}
@@ -145,7 +146,7 @@ function ProductAvailableCustomizationsComponent(props) {
                                 <List component="div" disablePadding>
                                     {
                                         customizableAreas.map((customizableArea) => (
-                                            <ListItem component={"div"} key={customizableArea.id}>
+                                            <ListItem component={"div"} key={uuidv4()}>
                                                 <CustomizableAreaAvailableCustomizations
                                                     customizableArea={customizableArea}/>
                                             </ListItem>))

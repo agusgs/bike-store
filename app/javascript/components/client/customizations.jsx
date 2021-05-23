@@ -2,6 +2,7 @@ import OptionsCard from "../common/optionsCard";
 import React, {useState} from "react";
 import * as PropTypes from "prop-types";
 import {priceInDisplayName} from "../../lib/money";
+import { v4 as uuidv4 } from 'uuid';
 
 class CustomizationOptions extends React.Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class CustomizationOptions extends React.Component {
             <OptionsCard name={name} withSelector={true} options={priceInDisplayName(customizations)}
                          optionChange={(customization) => this.onSelectedCustomization(customization)}>
                 {shouldRenderCustomization ?
-                    <Customization key={this.state.selectedCustomization.id} {...this.state.selectedCustomization}
+                    <Customization key={uuidv4()} {...this.state.selectedCustomization}
                                    onSelectedCustomization={(customization) => this.onChildrenSelectedCustomization(customization)}/> : null}
             </OptionsCard>
         )
@@ -61,7 +62,7 @@ function CustomizationContainer(props) {
     return (
         <OptionsCard name={props.name} withSelector={false}>
             {props.customizations.map((customization) => (
-                <Customization key={customization.id} {...customization}
+                <Customization key={uuidv4()} {...customization}
                                onSelectedCustomization={(selectedCustomization) => onChildrenSelectedCustomization(customization, selectedCustomization)}/>)
             )}
         </OptionsCard>

@@ -10,6 +10,7 @@ import {useAppContext} from "./context";
 import {Redirect} from "react-router-dom";
 import {CenteredCard} from "../common/centeredCard";
 import {Review} from "./review";
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     stepper: {
@@ -66,7 +67,7 @@ export default function Checkout() {
                 </Typography>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
                     {steps.map((label) => (
-                        <Step key={label}>
+                        <Step key={uuidv4()}>
                             <StepLabel>{label}</StepLabel>
                         </Step>
                     ))}

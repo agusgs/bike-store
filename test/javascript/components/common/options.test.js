@@ -1,7 +1,7 @@
 import React from 'react'
 import {fireEvent, render, screen} from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'
-import {AsyncOptions} from "../../../app/javascript/components/common/asyncOptions";
+import {AsyncOptions} from "../../../../app/javascript/components/common/asyncOptions";
 import {BrowserRouter} from "react-router-dom";
 
 describe('when the product selection is loading', () => {

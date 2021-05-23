@@ -3,6 +3,7 @@ import {useAppContext} from "./context";
 import React from "react";
 import {Customization} from "./customizations";
 import {AsyncOptions} from "../common/asyncOptions";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export function CustomizableAreas() {
@@ -17,7 +18,7 @@ export function CustomizableAreas() {
             {
                 customizableAreas.value ? customizableAreas.value.map((customizableArea) => (
                     <Customization
-                        key={customizableArea.id}
+                        key={uuidv4()}
                         option_type={'option'}
                         onSelectedCustomization={onCustomizableAreaCustomized(customizableArea)}
                         price={0}
