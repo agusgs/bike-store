@@ -6,6 +6,7 @@ import {ProductsPage} from "./productsPage";
 import {SnackbarProvider} from "notistack";
 import {ProductCreate} from "./productCreate";
 import {ProductUpdate} from "./productUpdate";
+import {OrdersPage} from "./ordersPage";
 
 const App = () => {
     return (
@@ -16,7 +17,7 @@ const App = () => {
                     <AdminAppBar/>
                     <Switch>
                         <Route exact path="/admin">
-                            {"Admin home page"}
+                            <OrdersPage/>
                         </Route>
                         <Route path="/admin/products/create">
                             <ProductCreate/>

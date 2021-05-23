@@ -46,7 +46,7 @@ export function ProductsPage() {
                 </TableHead>
                 <TableBody>
                     {asyncState.products.map((product) => (
-                            <TableRow onClick={() => { history.push(`/admin/products/update/${product.id}`)}} key={product.id}>
+                            <TableRow hover onClick={() => { history.push(`/admin/products/update/${product.id}`)}} key={product.id}>
                                 <TableCell component="th" scope="row"> {product.id} </TableCell>
                                 <TableCell>{product.name}</TableCell>
                                 <TableCell>{product.available ? "YES" : "NO"}</TableCell>

@@ -5,4 +5,8 @@ class OrderCustomization < ApplicationRecord
   has_many :children, :class_name => 'OrderCustomization', :foreign_key => 'parent_id'
 
   validates_presence_of :customization
+
+  def total
+    customization.price_in_cents + children.map { |child| child.total }.sum
+  end
 end

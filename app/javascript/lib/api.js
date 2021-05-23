@@ -81,6 +81,10 @@ export function getCustomizableAreas(product) {
     return get(`/customizable_areas?product_id=${product.id}`)
 }
 
+export function getOrders() {
+    return get('/orders')
+}
+
 export function postOrder(product, customizations, personalData) {
     const order = {
         client_data: personalData,

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'admin/products/update/:id', to: 'admin#index'
 
   resources :products, only: [:index, :create, :show, :update]
-  resources :orders, only: [:create]
+  resources :orders, only: [:create, :index]
 
   resources :customizable_areas, only: [:index, :create]
   resources :customizations, only: [:create]

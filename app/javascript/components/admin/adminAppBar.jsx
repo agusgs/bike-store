@@ -52,6 +52,11 @@ export function AdminAppBar() {
                             Create Product
                         </Link>
                     </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                        <Link style={{color: "inherit"}} to={'/admin'}>
+                            Orders
+                        </Link>
+                    </MenuItem>
                 </Menu>
             </IconButton>
             <Typography variant="h6" className={classes.title}>

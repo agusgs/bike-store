@@ -115,7 +115,7 @@ function ProductAvailableCustomizationsComponent(props) {
             <CardContent>
                 <Typography variant={"h5"}>{`Product ${id}`}</Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                    {`${name} (${euro(price).format()}) ${listed ? "LISTED" : "UNLISTED"}`}
+                    {`${name} (${euro(price).format()})`}
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -129,7 +129,7 @@ function ProductAvailableCustomizationsComponent(props) {
                                     inputProps={{'aria-label': 'primary checkbox'}}
                                 />
                             }
-                            label="Listed"/>
+                            label={`${listed ? "LISTED" : "UNLISTED"}`}/>
                     </Grid>
                     <Grid item xs={12}>
                         <Accordion expanded={true}>

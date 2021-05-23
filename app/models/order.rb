@@ -11,4 +11,8 @@ class Order < ApplicationRecord
   validates_inclusion_of :status, in: [PLACED]
 
   validates :client_email, format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  def total
+    product.price_in_cents + order_customized_areas.map{ |order_customized_area| order_customized_area.total }.sum
+  end
 end
