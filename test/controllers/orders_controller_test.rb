@@ -37,9 +37,11 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show returns an order' do
-    get "/orders/#{Order.first.id}"
-    assert_response :success
-    assert_equal OrderSerializer.serialize(Order.first, deep: true), response.parsed_body.deep_symbolize_keys
+    Random.stub :uuid, "asd" do
+      get "/orders/#{Order.first.id}"
+      assert_response :success
+      assert_equal OrderSerializer.serialize(Order.first, deep: true), response.parsed_body.deep_symbolize_keys
+    end
   end
 
   test 'update fails if order not exist' do

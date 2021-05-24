@@ -15,15 +15,17 @@ class CustomizationSerializerTest < ActiveSupport::TestCase
   end
 
   test "serializes correctly with deep flag on" do
-    CustomizationSerializer.serialize(Customization.all, deep: true).each do |serialized|
-      customization = Customization.find(serialized[:id])
+    Random.stub :uuid, "asd" do
+      CustomizationSerializer.serialize(Customization.all, deep: true).each do |serialized|
+        customization = Customization.find(serialized[:id])
 
-      assert_equal serialized[:id], customization.id
-      assert serialized[:token].present?
-      assert_equal serialized[:name], customization.name
-      assert_equal serialized[:price], customization.price_in_cents
-      assert_equal serialized[:option_type], customization.option_type
-      assert_equal serialized[:customizations], CustomizationSerializer.serialize(customization.customizations, deep: true)
+        assert_equal serialized[:id], customization.id
+        assert serialized[:token].present?
+        assert_equal serialized[:name], customization.name
+        assert_equal serialized[:price], customization.price_in_cents
+        assert_equal serialized[:option_type], customization.option_type
+        assert_equal serialized[:customizations], CustomizationSerializer.serialize(customization.customizations, deep: true)
+      end
     end
   end
 end
