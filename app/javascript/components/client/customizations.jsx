@@ -1,8 +1,7 @@
 import OptionsCard from "../common/optionsCard";
 import React, {useState} from "react";
 import * as PropTypes from "prop-types";
-import {priceInDisplayName} from "../../lib/money";
-import { v4 as uuidv4 } from 'uuid';
+import {euro, priceInDisplayName} from "../../lib/money";
 
 class CustomizationOptions extends React.Component {
     constructor(props) {
@@ -15,9 +14,13 @@ class CustomizationOptions extends React.Component {
 
     onChildrenSelectedCustomization(customization) {
         if (customization) {
-            const totalPrice = this.state.selectedCustomization.price + (customization.totalPrice || 0);
-            this.props.onSelectedCustomization(
-                {...this.state.selectedCustomization, totalPrice: totalPrice, childCustomization: customization})
+            if (customization.id === this.state.selectedCustomization.id) {
+                this.props.onSelectedCustomization(customization)
+            } else {
+                const totalPrice = customization.totalPrice || 0
+                this.props.onSelectedCustomization(
+                    {...this.state.selectedCustomization, totalPrice: totalPrice, childCustomization: customization})
+            }
         } else {
             this.props.onSelectedCustomization(
                 {...this.state.selectedCustomization, totalPrice: this.state.selectedCustomization.price})
@@ -25,7 +28,10 @@ class CustomizationOptions extends React.Component {
     }
 
     onSelectedCustomization(customization) {
-        this.props.onSelectedCustomization(customization ? {...customization, totalPrice: customization ? customization.price : 0} : null)
+        this.props.onSelectedCustomization(customization ? {
+            ...customization,
+            totalPrice: customization ? customization.price : 0
+        } : null)
         this.setState({selectedCustomization: customization})
     }
 
@@ -36,7 +42,7 @@ class CustomizationOptions extends React.Component {
             <OptionsCard name={name} withSelector={true} options={priceInDisplayName(customizations)}
                          optionChange={(customization) => this.onSelectedCustomization(customization)}>
                 {shouldRenderCustomization ?
-                    <Customization key={uuidv4()} {...this.state.selectedCustomization}
+                    <Customization key={this.props.token} {...this.state.selectedCustomization}
                                    onSelectedCustomization={(customization) => this.onChildrenSelectedCustomization(customization)}/> : null}
             </OptionsCard>
         )
@@ -51,18 +57,23 @@ function CustomizationContainer(props) {
         const withoutCustomization = childrenCustomizations.filter((existentCustomization) => customization.id !== existentCustomization.id)
         const customizations = childCustomization ? [...withoutCustomization, {
             ...customization,
+            totalPrice: childCustomization.totalPrice + customization.price,
             childCustomization: childCustomization
         }] : [...withoutCustomization]
-        const totalPrice = customizations.reduce(((acc, customization) => acc + customization.totalPrice), 0);
+        const totalPrice = customizations.reduce(((acc, customization) => acc + customization.totalPrice || 0), 0);
 
         setChildrenCustomizations(customizations)
-        props.onSelectedCustomization(customizations)
+        props.onSelectedCustomization({
+            ...props,
+            childCustomization: customizations,
+            totalPrice: totalPrice + props.price})
     }
 
+    const name = props.name + ((props.price && props.price > 0) ? ` (${euro(props.price).format()})` : "")
     return (
-        <OptionsCard name={props.name} withSelector={false}>
+        <OptionsCard name={name} withSelector={false}>
             {props.customizations.map((customization) => (
-                <Customization key={uuidv4()} {...customization}
+                <Customization key={customization.token} {...customization}
                                onSelectedCustomization={(selectedCustomization) => onChildrenSelectedCustomization(customization, selectedCustomization)}/>)
             )}
         </OptionsCard>

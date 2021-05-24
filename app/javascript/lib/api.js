@@ -58,6 +58,10 @@ export function updateProduct(id, available) {
     return put(`/products/${id}?available=${available}`)
 }
 
+export function updateCustomization(id, optionType) {
+    return put(`/customizations/${id}?option_type=${optionType}`)
+}
+
 export function createCustomization(parent, name, price, selectedOption) {
     if (!parent.customizableArea) {
         return post("/customizations", {name: name, price: price, type: selectedOption, parent_id: parent.id})

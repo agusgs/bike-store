@@ -4,12 +4,11 @@ import {CenteredCard} from "../common/centeredCard";
 import ErrorHandler from "../common/errorHandler";
 import {Spinner} from "../common/spinner";
 import * as PropTypes from "prop-types";
-import {getOrder, updateOrder, updateProduct} from "../../lib/api";
+import {getOrder, updateOrder} from "../../lib/api";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import {Divider, ListItem, ListItemText, makeStyles, Select} from "@material-ui/core";
 import {useSnackbar} from "notistack";
-import {euro} from "../../lib/money";
 import OrderSummary from "../common/orderSummary";
 
 const useStyles = makeStyles((theme) => ({

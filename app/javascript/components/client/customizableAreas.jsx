@@ -18,7 +18,7 @@ export function CustomizableAreas() {
             {
                 customizableAreas.value ? customizableAreas.value.map((customizableArea) => (
                     <Customization
-                        key={uuidv4()}
+                        key={customizableArea.token}
                         option_type={'option'}
                         onSelectedCustomization={onCustomizableAreaCustomized(customizableArea)}
                         price={0}

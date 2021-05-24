@@ -4,12 +4,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
     CardActions,
     FormControlLabel,
+    IconButton,
     ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
     Switch
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -18,60 +18,75 @@ import {euro} from "../../lib/money";
 import {makeStyles} from "@material-ui/core/styles";
 import AddIcon from '@material-ui/icons/Add';
 import CustomizableAreaCreationModal from "./customizableAreaCreationModal";
-import {getProduct, updateProduct} from "../../lib/api";
+import {getProduct, updateCustomization, updateProduct} from "../../lib/api";
 import ErrorHandler from "../common/errorHandler";
 import {Spinner} from "../common/spinner";
 import CustomizationCreationModal from "./customizationCreationModal";
 import List from "@material-ui/core/List";
 import {useSnackbar} from "notistack";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+import {CustomizationTypeSelection} from "./customizationTypeSelection";
 
 const useStyles = makeStyles((theme) => ({
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    accordion: {
-        padding: 0
-    }
+    selector: {
+        marginRight: theme.spacing(2),
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+    },
 }));
 
 function AvailableCustomizations(props) {
     const classes = useStyles();
-    const {name, price} = props.parent
+    const {id, name, price, option_type} = props.parent
     const [newCustomization, setNewCustomization] = useState(false)
     const [customizations, setCustomizations] = useState(props.customizations)
+    const {enqueueSnackbar} = useSnackbar();
 
     function customizationCreated(customization) {
         setCustomizations([...customizations, customization])
     }
 
+    function updateCustomizationType(value) {
+        return updateCustomization(id, value).then(() => {
+            enqueueSnackbar(`Customization updated`, {variant: "success"})
+        }).catch((e) => {
+            enqueueSnackbar('There was an error updating your customization', {variant: "error"})
+            throw new Error(e)
+        })
+    }
+
     return (
         <>
-            <Accordion expanded={true}>
-                <AccordionSummary
-                    expandIcon={<AddIcon/>}
-                    aria-controls="customizations"
-                    id="customizations"
-                    onClick={() => setNewCustomization(true)}
-                >
-                    <Typography
-                        className={classes.heading}>{`${name} (${euro(price).format()})`}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <List component="div" disablePadding>
-                        {
-                            customizations.map((customization) => (
-                                <ListItem component={"div"} key={uuidv4()}>
-                                    <AvailableCustomizations
-                                        parent={customization}
-                                        customizations={customization.customizations || []}
-                                    />
-                                </ListItem>))
-                        }
-                    </List>
-                </AccordionDetails>
-            </Accordion>
+            <List disablePadding className={classes.nested} expanded={true}>
+                <ListItem disablePadding>
+                    <ListItemText primary={`${name} (${euro(price).format()})`}/>
+                    {
+                        props.withSelector ? <div className={classes.selector}>
+                            <CustomizationTypeSelection selected={option_type} onChange={updateCustomizationType}/>
+                        </div> : null
+
+                    }
+                    <ListItemSecondaryAction onClick={() => setNewCustomization(true)}>
+                        <IconButton aria-label="add">
+                            <AddIcon/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+                {
+                    customizations.map((customization) => (
+                        <AvailableCustomizations
+                            key={uuidv4()}
+                            parent={customization}
+                            customizations={customization.customizations || []}
+                            withSelector
+                        />))
+                }
+            </List>
             <CustomizationCreationModal
                 open={newCustomization}
                 handleClose={() => setNewCustomization(false)}
@@ -85,16 +100,16 @@ function AvailableCustomizations(props) {
 function CustomizableAreaAvailableCustomizations(props) {
     return (<AvailableCustomizations parent={{...props.customizableArea, customizableArea: true}}
                                      customizations={props.customizableArea.customizations || []}
+                                     withSelector={false}
     />)
 }
 
 function ProductAvailableCustomizationsComponent(props) {
-    const classes = useStyles();
     const {id, name, price, available} = props.product
     const [newCustomizableArea, setNewCustomizableArea] = useState(false)
     const [customizableAreas, setCustomizableAreas] = useState(props.customizableAreas)
     const [listed, setListed] = React.useState(available);
-    const { enqueueSnackbar } = useSnackbar();
+    const {enqueueSnackbar} = useSnackbar();
 
     function customizableAreaCreated(customizableArea) {
         setCustomizableAreas([...customizableAreas, customizableArea])
@@ -104,10 +119,10 @@ function ProductAvailableCustomizationsComponent(props) {
         const available = !listed;
         setListed(available)
         updateProduct(id, available).then(() => {
-            enqueueSnackbar(`Product updated`, { variant: "success" })
+            enqueueSnackbar(`Product updated`, {variant: "success"})
         }).catch(() => {
             setListed(!available)
-            enqueueSnackbar('There was an error updating your product', { variant: "error" })
+            enqueueSnackbar('There was an error updating your product', {variant: "error"})
         })
     }
 
@@ -133,27 +148,22 @@ function ProductAvailableCustomizationsComponent(props) {
                             label={`${listed ? "LISTED" : "UNLISTED"}`}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Accordion expanded={true}>
-                            <AccordionSummary
-                                expandIcon={<AddIcon/>}
-                                aria-controls="customizable_areas"
-                                id="customizable_areas"
-                                onClick={() => setNewCustomizableArea(true)}
-                            >
-                                <Typography className={classes.heading}>Customizable Areas</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <List component="div" disablePadding>
-                                    {
-                                        customizableAreas.map((customizableArea) => (
-                                            <ListItem component={"div"} key={uuidv4()}>
-                                                <CustomizableAreaAvailableCustomizations
-                                                    customizableArea={customizableArea}/>
-                                            </ListItem>))
-                                    }
-                                </List>
-                            </AccordionDetails>
-                        </Accordion>
+                        <List disablePadding>
+                            <ListItem disablePadding>
+                                <ListItemText primary={"Customizable Areas"}/>
+                                <ListItemSecondaryAction onClick={() => setNewCustomizableArea(true)}>
+                                    <IconButton edge="end" aria-label="add">
+                                        <AddIcon/>
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                            {
+                                customizableAreas.map((customizableArea) => (
+                                    <CustomizableAreaAvailableCustomizations
+                                        key={uuidv4()}
+                                        customizableArea={customizableArea}/>))
+                            }
+                        </List>
                     </Grid>
                 </Grid>
             </CardContent>

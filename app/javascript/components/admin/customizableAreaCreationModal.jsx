@@ -71,7 +71,7 @@ export default function CustomizableAreaCreationModal(props) {
                     disabled={asyncState.loading}
                     onClick={props.handleClose}
                 >
-                    Close
+                    Cancel
                 </Button>
                 <Button
                     variant="contained"

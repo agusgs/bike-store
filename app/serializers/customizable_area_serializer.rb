@@ -18,7 +18,7 @@ class CustomizableAreaSerializer
     customizable_areas.map do |customizable_area|
       serialized = {
         id: customizable_area.id,
-        token: customizable_area.id,
+        token: Random.uuid,
         name: customizable_area.name,
       }
 

@@ -8,6 +8,7 @@ import {createCustomization} from "../../lib/api";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import {CustomModal} from "../common/customModal";
+import {CustomizationTypeSelection} from "./customizationTypeSelection";
 
 export default function CustomizationCreationModal(props) {
     const optionValue = 'option';
@@ -57,6 +58,11 @@ export default function CustomizationCreationModal(props) {
         }
     }
 
+    function updateSelectedOption(value) {
+        setSelectedOption(value)
+        return Promise.resolve()
+    }
+
     return (
         <CustomModal
             open={props.open}
@@ -90,19 +96,7 @@ export default function CustomizationCreationModal(props) {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Select
-                            native
-                            value={selectedOption}
-                            onChange={(e) => setSelectedOption(e.target.value)}
-                            inputProps={{
-                                role: "listbox",
-                                id: 'customization_type',
-                            }}
-                        >
-                            <option role="option" value={optionValue}>Option</option>
-                            ))}
-                            <option role="option" value={containerValue}>Container</option>))}
-                        </Select>
+                        <CustomizationTypeSelection selcted={selectedOption} onChange={updateSelectedOption}/>
                     </Grid>
                 </Grid>
             </CardContent>

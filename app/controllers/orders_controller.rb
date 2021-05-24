@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    render json: OrderSerializer.serialize(Order.all.order(:status).order(id: :desc))
+    render json: OrderSerializer.serialize(Order.all.order(status: :desc).order(id: :desc))
   end
 
   def show

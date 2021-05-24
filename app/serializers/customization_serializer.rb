@@ -19,7 +19,7 @@ class CustomizationSerializer
     customizations.map do |customization|
       serialized = {
         id: customization.id,
-        token: customization.id,
+        token: Random.uuid,
         name: customization.name,
         option_type: customization.option_type,
         price: customization.price_in_cents,
